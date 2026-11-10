@@ -466,9 +466,205 @@ function tacticHTML(c, game) {
     }).join("")}</div>`;
 }
 
+// ------------------------------------------------------------------ scoring popup (tap the VP number)
+// Battle tactics are worth 5 VP each; ticking one adds them and unticking takes them off again.
+const TAC_VP = 5;
+function toggleTactic(game, k, r) {
+  if (game.tactics[k]) { delete game.tactics[k]; game.vp.me = Math.max(0, game.vp.me - TAC_VP); }
+  else { game.tactics[k] = r; game.vp.me += TAC_VP; }
+}
+// The tier to show for a card in round r: the one completed in r (so it can be unticked), else the next one to do.
+function tierFor(game, c, r) {
+  const key = t => `tac|${c.name}|${t.tier}`;
+  return c.tiers.find(t => game.tactics[key(t)] === r) || c.tiers.find(t => !game.tactics[key(t)]) || null;
+}
+// "Round 1 only" / "Round 2 onwards" scoring lines only count in those rounds
+const scoreApplies = (txt, r) => !(/^round 1 only/i.test(txt) && r !== 1) && !(/^round 2 onwards/i.test(txt) && r < 2);
+
+// remind: opened by Next at the end of a turn; "Continue" runs next(), closing stays on the step
+function scoreSheet({ game, army, bp, side, round, save, done, remind, next }) {
+  game.scored = game.scored || { me: {}, opp: {} };
+  game.scored[side] = game.scored[side] || {};
+  let r = round;
+  const bg = document.createElement("div");
+  bg.className = "sheet-bg";
+  document.body.appendChild(bg);
+  document.body.classList.add("dep-lock");
+  const onKey = e => { if (e.key === "Escape") close(); };
+  function close(go) { bg.parentNode?.removeChild(bg); document.body.classList.remove("dep-lock"); document.removeEventListener("keydown", onKey); (go && next ? next : done)(); }
+  document.addEventListener("keydown", onKey);
+  const row = (attrs, on, vp, body, off) => `<button class="score-row${on ? " on" : ""}" ${attrs} ${off ? "disabled" : ""} aria-pressed="${on}"><span class="sc-vp">${vp} VP</span><span class="sc-txt">${body}</span><span class="sc-tick">${on ? "✓" : ""}</span></button>`;
+  function paint() {
+    const got = game.scored[side][r] || [];
+    const vp = side === "me" ? game.vp.me : game.vp.opp;
+    const prim = bp?.scoring?.length ? bp.scoring.map((x, i) => row(`data-pri="${i}"`, got.includes(i), x[0], esc(x[1]), !scoreApplies(x[1], r) && !got.includes(i))).join("")
+      : `<p class="small muted">Pick the battleplan in Set-up to see its scoring.</p>`;
+    let tac = "";
+    if (side === "me") {
+      tac = army.tactics.map(c => {
+        if (c.missing) return `<div class="small warn">${esc(c.name)}: not a GHB 2026-27 card</div>`;
+        const t = tierFor(game, c, r), k = t && `tac|${c.name}|${t.tier}`;
+        const prev = c.tiers.filter(x => game.tactics[`tac|${c.name}|${x.tier}`] && x !== t).map(x => `${x.tier} (R${game.tactics[`tac|${c.name}|${x.tier}`]})`);
+        return `<div class="sc-card"><div class="tiny muted"><b>${esc(c.name)}</b>${prev.length ? ` · done: ${prev.join(", ")}` : ""}</div>
+          ${t ? row(`data-stac="${esc(k)}"`, !!game.tactics[k], TAC_VP, `<b>${esc(t.tier)}: ${esc(t.name)}</b><span class="small">${fmt(t.text)}</span>`) : `<p class="small good">All three tactics on this card are done.</p>`}</div>`;
+      }).join("") || `<p class="small muted">No battle tactic cards in this list.</p>`;
+    }
+    bg.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="Scoring">
+      ${remind ? `<div class="warn-box" style="margin-top:0"><b>End of ${side === "me" ? "your" : "your opponent's"} turn:</b> enter ${side === "me" ? "your" : "their"} round ${round} scores before moving on.</div>` : ""}
+      <div class="row spread"><h3 style="margin:0">${side === "me" ? "Your" : "Opponent's"} scoring</h3><button class="icon-btn" data-x aria-label="Close">✕</button></div>
+      <div class="row spread sc-sub"><div class="seg"><button data-rd="-1" aria-label="Previous round" ${r <= 1 ? "disabled" : ""}>‹</button><button class="on" tabindex="-1">Round ${r}</button><button data-rd="1" aria-label="Next round" ${r >= 5 ? "disabled" : ""}>›</button></div>
+        <span>${side === "me" ? "You" : "Opponent"}: <b>${vp} VP</b></span></div>
+      <h4>${bp ? esc(bp.name) : "Battleplan"}: end of turn</h4>${prim}
+      ${side === "me" ? `<h4>Battle tactics</h4>${tac}<p class="tiny muted">One tactic per card each turn, in order: Affray, then Strike, then Domination. Once one is done, the next one shows from the next round.</p>`
+        : `<h4>Battle tactics completed this round</h4><div class="seg">${[0, 1, 2].map(n => `<button data-otac="${n}" class="${(game.oppTac?.[r] || 0) === n ? "on" : ""}">${n}</button>`).join("")}</div><span class="small muted"> × ${TAC_VP} VP</span>`}
+      <p class="tiny muted">Ticking adds the VP and unticking takes it off. Use + and − for anything else.</p>
+      ${remind ? `<button class="btn primary block" data-go>Scores entered, continue ›</button>` : ""}
+    </div>`;
+  }
+  bg.addEventListener("click", e => {
+    if (e.target.closest("[data-go]")) return close(true);
+    if (e.target === bg || e.target.closest("[data-x]")) return close();
+    const b = e.target.closest("button");
+    if (!b || b.disabled) return;
+    if (b.dataset.rd) { r = Math.min(5, Math.max(1, r + +b.dataset.rd)); paint(); return; }
+    if (b.dataset.pri != null) {
+      const i = +b.dataset.pri, pts = parseInt(bp.scoring[i][0], 10) || 0, got = game.scored[side][r] = game.scored[side][r] || [];
+      const on = got.includes(i), d = on ? -pts : pts;
+      game.scored[side][r] = on ? got.filter(x => x !== i) : [...got, i];
+      if (side === "me") game.vp.me = Math.max(0, game.vp.me + d); else game.vp.opp = Math.max(0, game.vp.opp + d);
+    }
+    if (b.dataset.stac) toggleTactic(game, b.dataset.stac, r);
+    if (b.dataset.otac != null) {
+      game.oppTac = game.oppTac || {};
+      const was = game.oppTac[r] || 0, n = +b.dataset.otac;
+      game.oppTac[r] = n; game.vp.opp = Math.max(0, game.vp.opp + (n - was) * TAC_VP);
+    }
+    save(); paint();
+    $$(".trk-open").forEach(x => { x.textContent = x.dataset.score === "me" ? game.vp.me : game.vp.opp; });
+  });
+  paint();
+  $("[data-x]", bg).focus();
+}
+
+// ------------------------------------------------------------------ end of game: summary, image, results kept on the device
+// Share sheet on phones (save to Photos), a download elsewhere.
+async function saveBlob(blob, fname, title) {
+  fname = fname.replace(/[\\/:*?"<>|]+/g, "");
+  const file = new File([blob], fname, { type: blob.type });
+  if (coarse && navigator.canShare?.({ files: [file] })) {
+    try { await navigator.share({ files: [file], title }); return; }
+    catch (e) { if (e.name === "AbortError") return; }
+  }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = fname;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  toast("Image saved");
+}
+
+const WHO = { me: "You", opp: "Opp" };
+function gameSummary(game, army, bp) {
+  const pri = (side, r) => (game.scored?.[side]?.[r] || []).reduce((s, i) => s + (parseInt(bp?.scoring?.[i]?.[0], 10) || 0), 0);
+  const tierName = (card, tier) => army.tactics.find(c => c.name === card)?.tiers.find(t => t.tier === tier)?.name || "";
+  const rounds = [1, 2, 3, 4, 5].map(r => {
+    const tacs = Object.entries(game.tactics).filter(([, v]) => v === r).map(([k]) => { const [, card, tier] = k.split("|"); return { card, tier, name: tierName(card, tier) }; });
+    const me = { pri: pri("me", r), tac: tacs.length * TAC_VP, tacs };
+    const opp = { pri: pri("opp", r), tac: (game.oppTac?.[r] || 0) * TAC_VP };
+    me.total = me.pri + me.tac; opp.total = opp.pri + opp.tac;
+    return { r, prio: game.prio?.[r] || null, first: game.first[r] || null, me, opp };
+  });
+  const tot = side => {
+    const p = rounds.reduce((s, x) => s + x[side].pri, 0), t = rounds.reduce((s, x) => s + x[side].tac, 0), total = side === "me" ? game.vp.me : game.vp.opp;
+    return { pri: p, tac: t, other: total - p - t, total };
+  };
+  const me = tot("me"), opp = tot("opp");
+  return { rounds, me, opp, result: me.total > opp.total ? "Win" : me.total < opp.total ? "Loss" : "Draw" };
+}
+
+// one record per game, upserted while the game-end step is open (a database copy comes later)
+function storeResult(game, list, bp, sum) {
+  const all = store.get("bc-results", []);
+  const rec = {
+    id: game.id, listId: list.id, list: list.name, faction: list.faction, battleplan: bp?.name || "", role: game.role || "",
+    date: new Date().toISOString(), me: sum.me, opp: sum.opp, result: sum.result,
+    rounds: sum.rounds.map(x => ({ r: x.r, prio: x.prio, first: x.first, me: { pri: x.me.pri, tac: x.me.tac, tacs: x.me.tacs }, opp: x.opp })),
+  };
+  const i = all.findIndex(x => x.id === rec.id);
+  if (i >= 0) { rec.date = all[i].date; all[i] = rec; } else all.unshift(rec);
+  store.set("bc-results", all.slice(0, 200));
+  return all.filter(x => x.listId === list.id);
+}
+
+function summaryHTML(sum, game, bp) {
+  const cell = v => `<td class="num">${v || "–"}</td>`;
+  const rows = sum.rounds.map(x => `<tr><td><b>R${x.r}</b></td><td>${x.prio ? WHO[x.prio] : "–"}</td><td>${x.first ? WHO[x.first] : "–"}</td>
+    ${cell(x.me.pri)}${cell(x.me.tac)}<td class="num"><b>${x.me.total}</b></td>${cell(x.opp.pri)}${cell(x.opp.tac)}<td class="num"><b>${x.opp.total}</b></td></tr>`).join("");
+  const other = sum.me.other || sum.opp.other ? `<tr class="muted"><td colspan="3">Other (+ / −)</td><td colspan="2"></td><td class="num">${sum.me.other}</td><td colspan="2"></td><td class="num">${sum.opp.other}</td></tr>` : "";
+  const tacs = sum.rounds.flatMap(x => x.me.tacs.map(t => `<li>R${x.r}: <b>${esc(t.card)}</b>, ${esc(t.tier)}${t.name ? `: ${esc(t.name)}` : ""}</li>`)).join("");
+  return `<div class="card">
+      <div class="row spread"><div><div class="small muted">${esc(bp?.name || "Battleplan not set")}${game.role ? ` · ${game.role === "attacker" ? "Attacker" : "Defender"}` : ""}</div>
+        <div class="final">You <b>${sum.me.total}</b> – <b>${sum.opp.total}</b> Opponent</div></div>
+        <span class="chip ${sum.result === "Win" ? "good" : sum.result === "Loss" ? "bad" : ""}">${sum.result}</span></div>
+      <div class="sum-wrap"><table class="sum">
+        <thead><tr><th></th><th>Priority</th><th>First</th><th class="num grp" colspan="3">You</th><th class="num grp" colspan="3">Opponent</th></tr>
+          <tr><th></th><th></th><th></th><th class="num">Pri</th><th class="num">Tac</th><th class="num">Rd</th><th class="num">Pri</th><th class="num">Tac</th><th class="num">Rd</th></tr></thead>
+        <tbody>${rows}${other}<tr class="sum-tot"><td colspan="3"><b>Total</b></td><td class="num">${sum.me.pri}</td><td class="num">${sum.me.tac}</td><td class="num"><b>${sum.me.total}</b></td><td class="num">${sum.opp.pri}</td><td class="num">${sum.opp.tac}</td><td class="num"><b>${sum.opp.total}</b></td></tr></tbody>
+      </table></div>
+      <p class="tiny muted">Pri = battleplan scoring, Tac = battle tactics (5 VP each). Priority and first turn come from each round's start step; scores from the VP popups.</p>
+      ${tacs ? `<h4>Your battle tactics</h4><ul class="small sum-tacs">${tacs}</ul>` : ""}
+    </div>`;
+}
+
+// the summary drawn straight onto a canvas, so it saves as a clean PNG
+async function summaryImage(sum, game, list, bp) {
+  const cs = getComputedStyle(document.body), root = getComputedStyle(document.documentElement);
+  const C = { bg: cs.backgroundColor, ink: cs.color, muted: root.getPropertyValue("--muted").trim() || "#999", line: root.getPropertyValue("--line").trim() || "#444",
+    good: root.getPropertyValue("--good").trim(), bad: root.getPropertyValue("--bad").trim(), card: root.getPropertyValue("--surface").trim() || cs.backgroundColor };
+  const font = cs.fontFamily, W = 1080, pad = 48, rowH = 58;
+  const tacLines = sum.rounds.flatMap(x => x.me.tacs.map(t => `R${x.r}  ${t.card}, ${t.tier}${t.name ? `: ${t.name}` : ""}`));
+  const hasOther = sum.me.other || sum.opp.other;
+  const H = pad + 150 + rowH * (2 + 5 + 1 + (hasOther ? 1 : 0)) + 40 + (tacLines.length ? 50 + tacLines.length * 36 : 0) + pad;
+  const c = document.createElement("canvas"); c.width = W; c.height = H;
+  const g = c.getContext("2d");
+  g.fillStyle = C.bg; g.fillRect(0, 0, W, H);
+  g.textBaseline = "middle";
+  let y = pad;
+  g.fillStyle = C.ink; g.font = `800 40px ${font}`; g.fillText(list.name, pad, y + 20);
+  g.fillStyle = C.muted; g.font = `400 26px ${font}`;
+  g.fillText([list.faction, bp?.name, game.role && (game.role === "attacker" ? "Attacker" : "Defender"), new Date().toLocaleDateString()].filter(Boolean).join("  ·  "), pad, y + 66);
+  g.fillStyle = C.ink; g.font = `800 46px ${font}`; g.fillText(`You ${sum.me.total} – ${sum.opp.total} Opponent`, pad, y + 120);
+  g.fillStyle = sum.result === "Win" ? C.good : sum.result === "Loss" ? C.bad : C.muted; g.font = `800 40px ${font}`;
+  g.textAlign = "right"; g.fillText(sum.result.toUpperCase(), W - pad, y + 120); g.textAlign = "left";
+  y += 160;
+  // columns: round, priority, first, you pri/tac/rd, opp pri/tac/rd
+  const xs = [pad, pad + 90, pad + 230, 470, 570, 670, 800, 900, 1000];
+  const text = (t, i, yy, f, col, al = i >= 3 ? "center" : "left") => { g.font = f; g.fillStyle = col; g.textAlign = al; g.fillText(String(t), i >= 3 ? xs[i] : xs[i], yy); g.textAlign = "left"; };
+  const hr = yy => { g.strokeStyle = C.line; g.lineWidth = 2; g.beginPath(); g.moveTo(pad, yy); g.lineTo(W - pad, yy); g.stroke(); };
+  const hf = `700 22px ${font}`, bf = `400 28px ${font}`, bb = `800 28px ${font}`;
+  g.fillStyle = C.muted; g.font = hf; g.textAlign = "center"; g.fillText("YOU", xs[4], y + rowH / 2); g.fillText("OPPONENT", xs[7], y + rowH / 2); g.textAlign = "left";
+  y += rowH;
+  ["", "PRIORITY", "FIRST", "PRI", "TAC", "RD", "PRI", "TAC", "RD"].forEach((h, i) => text(h, i, y + rowH / 2, hf, C.muted));
+  y += rowH; hr(y);
+  for (const x of sum.rounds) {
+    const v = n => n || "–";
+    [`R${x.r}`, x.prio ? WHO[x.prio] : "–", x.first ? WHO[x.first] : "–", v(x.me.pri), v(x.me.tac), x.me.total, v(x.opp.pri), v(x.opp.tac), x.opp.total]
+      .forEach((t, i) => text(t, i, y + rowH / 2, i === 0 || i === 5 || i === 8 ? bb : bf, i === 0 || i === 5 || i === 8 ? C.ink : (t === "–" ? C.muted : C.ink)));
+    y += rowH; hr(y);
+  }
+  if (hasOther) { text("Other (+ / −)", 0, y + rowH / 2, bf, C.muted); text(sum.me.other, 5, y + rowH / 2, bf, C.muted); text(sum.opp.other, 8, y + rowH / 2, bf, C.muted); y += rowH; hr(y); }
+  ["TOTAL", "", "", sum.me.pri, sum.me.tac, sum.me.total, sum.opp.pri, sum.opp.tac, sum.opp.total].forEach((t, i) => text(t, i, y + rowH / 2, bb, C.ink));
+  y += rowH + 40;
+  if (tacLines.length) {
+    g.fillStyle = C.muted; g.font = hf; g.fillText("YOUR BATTLE TACTICS", pad, y); y += 44;
+    g.fillStyle = C.ink; g.font = `400 26px ${font}`;
+    for (const l of tacLines) { g.fillText(l, pad, y); y += 36; }
+  }
+  const blob = await new Promise(ok => c.toBlob(ok, "image/png"));
+  await saveBlob(blob, `${list.name} - ${bp?.name || "game"} - ${sum.me.total}-${sum.opp.total}.png`, "Game result");
+}
+
 // ------------------------------------------------------------------ play (phase navigator)
 function newGame() {
-  return { step: 0, first: {}, cp: 0, vp: { me: 0, opp: 0 }, fury: 0, rage: 0, battleplan: "", role: "", checks: {}, used: {}, tactics: {}, side: "me" };
+  return { step: 0, first: {}, cp: 0, vp: { me: 0, opp: 0 }, fury: 0, rage: 0, battleplan: "", role: "", checks: {}, used: {}, tactics: {}, side: "me", scored: { me: {}, opp: {} }, prio: {}, oppTac: {}, id: `g${Date.now()}` };
 }
 
 function stepsFor(game) {
@@ -551,6 +747,7 @@ async function viewPlay(list, army) {
   const game = Object.assign(newGame(), store.get(key, {}));
   const steps = stepsFor(game);
   const save = () => store.set(key, game);
+  if (!game.id) { game.id = `g${Date.now()}`; save(); }   // games started before results were kept
   const core = army.core || {};
   const st = steps[Math.min(game.step, steps.length - 1)];
   const facStats = await getStats(list.slug).catch(() => ({}));
@@ -566,7 +763,7 @@ async function viewPlay(list, army) {
     return `<button data-step="${i}" class="${i === game.step ? "on" : i < game.step ? "done" : ""}">${esc(lbl)}</button>`;
   };
 
-  let head = "", body = "";
+  let head = "", body = "", sum = null;
   if (st.kind === "pre" && st.id === "setup") {
     head = `<div class="phase-head"><h2>Before the battle</h2></div>`;
     const bpStats = r => (facStats.battleplans || []).find(x => norm(x.name) === norm(r));
@@ -589,7 +786,9 @@ async function viewPlay(list, army) {
   } else if (st.kind === "round") {
     head = `<div class="phase-head"><h2>Start of battle round ${st.r}</h2></div>`;
     const ra = all.filter(a => a.when === "battle-round-start" && (!a.round || a.round === st.r));
-    body = `<div class="card"><label>Who takes the first turn this round?</label>
+    body = `<div class="card"><label>Who had priority this round?</label>
+        <div class="seg"><button data-prio="me" class="${game.prio?.[st.r] === "me" ? "on" : ""}">Me</button><button data-prio="opp" class="${game.prio?.[st.r] === "opp" ? "on" : ""}">Opponent</button></div>
+        <label>Who takes the first turn this round?</label>
         <div class="seg" id="first"><button data-first="me" class="${game.first[st.r] === "me" ? "on" : ""}">Me</button><button data-first="opp" class="${game.first[st.r] === "opp" ? "on" : ""}">Opponent</button></div>
         <hr>${checklist(core.roundStart || [], game, `r${st.r}`)}</div>
       ${groupAbilities(ra).map(([l, as]) => `<h4>${esc(l)}</h4>` + as.map(a => abilityHTML(a, { game })).join("")).join("")}`;
@@ -615,14 +814,18 @@ async function viewPlay(list, army) {
       ${passives.length ? `<details class="card"><summary>Passives to remember (${passives.length})</summary>${passives.map(a => abilityHTML(a, { game, timing: false })).join("")}</details>` : ""}`;
   } else {
     head = `<div class="phase-head"><h2>Game over</h2></div>`;
-    body = `<div class="card"><p>Final score: <b>You ${game.vp.me}</b> – <b>${game.vp.opp} Opponent</b></p>
-      <p class="small">${Object.keys(game.tactics).length} battle tactics completed.</p></div>
+    sum = gameSummary(game, army, bp);
+    const past = storeResult(game, list, bp, sum).filter(x => x.id !== game.id);
+    body = `${summaryHTML(sum, game, bp)}
+      <button class="btn primary block" id="sumimg">Save image</button>
+      <p class="tiny muted" style="margin:.4rem 0 1rem">This result is saved on this device.</p>
+      ${past.length ? `<details class="card"><summary>Earlier games with this list (${past.length})</summary><table><tbody>${past.map(x => `<tr><td>${esc(new Date(x.date).toLocaleDateString())}</td><td>${esc(x.battleplan || "–")}</td><td class="num">${x.me.total}–${x.opp.total}</td><td><span class="chip ${x.result === "Win" ? "good" : x.result === "Loss" ? "bad" : ""}">${x.result}</span></td></tr>`).join("")}</tbody></table></details>` : ""}
       <button class="btn danger block" id="reset">Start a new game</button>`;
   }
 
   app.innerHTML = `
     <div class="trackers">
-      ${[["cp", "CP"], ["vpme", "VP you"], ["vpopp", "VP opp"], ["fury", "Fury"]].map(([k, l]) => `<div class="trk"><div class="lbl">${l}</div><div class="val"><button data-trk="${k}" data-d="-1" aria-label="${l} minus">−</button><b>${k === "cp" ? game.cp : k === "vpme" ? game.vp.me : k === "vpopp" ? game.vp.opp : game.fury}</b><button data-trk="${k}" data-d="1" aria-label="${l} plus">+</button></div></div>`).join("")}
+      ${[["cp", "CP"], ["vpme", "VP you"], ["vpopp", "VP opp"], ["fury", "Fury"]].map(([k, l]) => `<div class="trk"><div class="lbl">${l}</div><div class="val"><button data-trk="${k}" data-d="-1" aria-label="${l} minus">−</button>${k === "vpme" || k === "vpopp" ? `<b class="trk-open" role="button" tabindex="0" data-score="${k === "vpme" ? "me" : "opp"}" aria-label="${l}: open scoring">${k === "vpme" ? game.vp.me : game.vp.opp}</b>` : `<b>${k === "cp" ? game.cp : game.fury}</b>`}<button data-trk="${k}" data-d="1" aria-label="${l} plus">+</button></div></div>`).join("")}
     </div>
     <div class="stepper" id="stepper">${visible.map(([s, i]) => chip(s, i)).join("")}</div>
     ${head}${body}
@@ -636,7 +839,14 @@ async function viewPlay(list, army) {
   $("#prev").onclick = () => onStep(Math.max(0, game.step - 1));
   $("#next").onclick = () => {
     if (st.kind === "round" && !game.first[st.r]) { toast("Pick who goes first this round"); return; }
-    onStep(Math.min(steps.length - 1, game.step + 1));
+    const go = () => onStep(Math.min(steps.length - 1, game.step + 1));
+    const tk = st.kind === "turn" && st.phase === "end-of-turn" && `r${st.r}t${st.t}`;
+    if (tk && !(game.reminded || {})[tk]) {   // leaving a player's turn: prompt for that player's scores first (once per turn)
+      game.reminded = { ...(game.reminded || {}), [tk]: true }; save();
+      scoreSheet({ game, army, bp, side: sideOf(game, st), round: st.r, save, done: rerender, remind: true, next: go });
+      return;
+    }
+    go();
   };
   $$("[data-trk]").forEach(b => b.onclick = () => {
     const d = +b.dataset.d, k = b.dataset.trk;
@@ -648,14 +858,20 @@ async function viewPlay(list, army) {
   });
   $$("[data-check]").forEach(c => c.onchange = () => { game.checks[c.dataset.check] = c.checked; c.closest(".check").classList.toggle("done", c.checked); save(); });
   $$("[data-use]").forEach(b => b.onclick = () => { const k = b.dataset.use; game.used[k] = !game.used[k]; rerender(); });
-  $$("[data-tac]").forEach(b => b.onclick = () => { const k = b.dataset.tac; if (game.tactics[k]) delete game.tactics[k]; else game.tactics[k] = st.r || 1; rerender(); });
+  $$("[data-tac]").forEach(b => b.onclick = () => { toggleTactic(game, b.dataset.tac, st.r || 1); rerender(); });
+  $$("[data-score]").forEach(b => {
+    const open = () => scoreSheet({ game, army, bp, side: b.dataset.score, round: st.r || (st.kind === "end" ? 5 : 1), save, done: rerender });
+    b.onclick = open; b.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } };
+  });
   $$("[data-first]").forEach(b => b.onclick = () => { game.first[st.r] = b.dataset.first; rerender(); });
+  $$("[data-prio]").forEach(b => b.onclick = () => { game.prio = { ...(game.prio || {}), [st.r]: b.dataset.prio }; rerender(); });
   $$("[data-role]").forEach(b => b.onclick = () => { game.role = b.dataset.role; rerender(); });
   const sel = $("#bp"); if (sel) sel.onchange = () => { game.battleplan = sel.value; rerender(); };
   const pr = $("#practise"); if (pr) pr.onclick = () => store.set(`bc-deploy-bp-${list.id}`, game.battleplan);
   const reset = () => { if (confirm("Reset this game's progress, scores and ticks?")) { store.del(key); viewPlay(list, army); } };
   $("#newgame").onclick = e => { e.preventDefault(); reset(); };
   if ($("#reset")) $("#reset").onclick = reset;
+  if ($("#sumimg")) $("#sumimg").onclick = () => summaryImage(sum, game, list, bp).catch(e => toast(e.message));
 }
 
 // ------------------------------------------------------------------ deploy (deployment practice)
@@ -1024,16 +1240,7 @@ async function viewDeploy(list, army) {
       g.fillText(`${bpName} · ${D.layout.side === "attacker" ? "Attacker" : "Defender"} · ${placed} models`, 16, HEAD / 2 + 16);
       g.drawImage(img, 0, HEAD, W, H);
       const blob = await new Promise(ok => c.toBlob(ok, "image/png"));
-      const fname = `${list.name} - ${bpName} - ${D.layout.side}.png`.replace(/[\\/:*?"<>|]+/g, "");
-      const file = new File([blob], fname, { type: "image/png" });
-      if (coarse && navigator.canShare?.({ files: [file] })) {
-        try { await navigator.share({ files: [file], title: `${bpName} deployment` }); return; }
-        catch (e) { if (e.name === "AbortError") return; }
-      }
-      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = fname;
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-      toast("Image saved");
+      await saveBlob(blob, `${list.name} - ${bpName} - ${D.layout.side}.png`, `${bpName} deployment`);
     } catch (e) { toast(e.message); }
     finally { URL.revokeObjectURL(url); }
   }

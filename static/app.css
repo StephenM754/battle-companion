@@ -100,6 +100,8 @@ details[open] > summary::before { transform: rotate(90deg); }
 .trk .lbl { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 .trk .val { display: flex; align-items: center; justify-content: space-between; }
 .trk .val b { font-size: 1.1rem; min-width: 0; flex: 1; }
+.trk-open { cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; border-radius: 6px; }
+.trk-open:hover, .trk-open:focus-visible { background: var(--surface-2); outline: none; }
 .trk button { width: 26px; height: 32px; padding: 0; flex: none; border: 0; background: transparent; font-size: 1.15rem; color: var(--muted); cursor: pointer; }
 .stepper { display: flex; gap: .3rem; overflow-x: auto; padding: .2rem 0 .5rem; scrollbar-width: none; }
 .stepper::-webkit-scrollbar { display: none; }
@@ -228,3 +230,32 @@ body.dep-lock { overflow: hidden; }
 .search { position: sticky; top: calc(58px + env(safe-area-inset-top)); z-index: 5; background: var(--bg); padding: .4rem 0; }
 .warn-box { border: 1px solid var(--warn); color: var(--warn); border-radius: 10px; padding: .5rem .7rem; font-size: .88rem; margin: .5rem 0; }
 @media (min-width: 700px) { .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; } }
+
+/* scoring popup */
+.sheet-bg { position: fixed; inset: 0; z-index: 45; background: rgba(0, 0, 0, .55); display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: var(--bg); border: 1px solid var(--line); border-radius: 16px 16px 0 0; width: 100%; max-width: 560px; max-height: 88dvh; overflow-y: auto;
+  padding: .9rem .9rem calc(1rem + env(safe-area-inset-bottom)); }
+@media (min-width: 700px) { .sheet-bg { align-items: center; } .sheet { border-radius: 16px; } }
+.sheet h4 { margin: 1rem 0 .4rem; }
+.sc-sub { margin-top: .5rem; }
+.sc-sub .seg button { padding: .35rem .6rem; }
+.score-row { display: flex; gap: .6rem; align-items: center; width: 100%; text-align: left; padding: .55rem .6rem; margin: .3rem 0; border: 1px solid var(--line);
+  border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; cursor: pointer; }
+.score-row.on { border-color: var(--good); background: color-mix(in srgb, var(--good) 14%, var(--surface)); }
+.score-row:disabled { opacity: .45; cursor: default; }
+.sc-vp { flex: none; font-weight: 800; min-width: 3.1rem; }
+.sc-txt { flex: 1; display: flex; flex-direction: column; gap: .15rem; }
+.sc-tick { flex: none; width: 1.4rem; height: 1.4rem; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-weight: 800; color: var(--good); }
+.score-row.on .sc-tick { border-color: var(--good); }
+.sc-card { margin: .5rem 0 .8rem; }
+
+/* game summary */
+.final { font-size: 1.35rem; font-weight: 700; margin-top: .15rem; }
+.chip.good { color: var(--good); border-color: var(--good); }
+.chip.bad { color: var(--bad); border-color: var(--bad); }
+.sum-wrap { overflow-x: auto; margin: .7rem -.2rem 0; }
+table.sum { font-size: .8rem; white-space: nowrap; }
+table.sum th, table.sum td { padding: .3rem .25rem; }
+table.sum th.grp { border-bottom: 2px solid var(--line); }
+table.sum .sum-tot td { border-top: 2px solid var(--line); font-weight: 700; }
+.sum-tacs { padding-left: 1.1rem; margin: .3rem 0; }
