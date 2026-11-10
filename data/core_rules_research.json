@@ -1,0 +1,836 @@
+{
+  "meta": {
+    "compiled": "2026-11-10",
+    "season": "General's Handbook 2026-27 (Pitched Battles 2026-27 / Season of Aqshy, 'Scourge of Aqshy')",
+    "latest_official_update_found": "Rules Updates, October 2026 (PDF file dated 28-10-2026; WarCom 'October Update' article 28 Oct 2026)",
+    "wahapedia_check": "The URL given (wahapedia.ru/aos4/the-rules/core-rules/) returns 404; the live page is /aos4/the-rules/the-core-rules/. Its 'Last update' table lists Core Rules April 2025, Rules Updates October 2026 (plus Sep/Aug/Jul/Jun/May/Apr 2026) and General's Handbook 2026-27 June 2026 -> it states it includes the Oct 2026 update, so it QUALIFIES; used for the 2026-27 Commands/Terrain/Magic/Army Composition/Command Models modules (which replace the core-book versions in matched play). The GHB 2026-27 page (/aos4/the-rules/general-s-handbook-2026-27/) lists only 'General's Handbook 2026-27 June 2026', i.e. EARLIER than the Oct 2026 Rules Update, so by your rule it does NOT qualify. It does in fact show the Oct 2026 GHB errata and FAQs inline (Ambuscade non-Faction-Terrain wording, Eruption of Fury FAQs). Items that rest on that page alone are tagged 'confidence: wahapedia-GHB-only' below; where WarCom or the official Rules Updates PDF backs them up, those are cited instead.",
+    "precedence_note": "In matched play the GHB 2026-27 battlepack says to use the Core Rules plus the '2026-27' versions of the Advanced Rules modules (Commands, Terrain, Magic, Army Composition, Command Models, Battle Tactics) plus the Season Rules 2026-27. Where the April 2025 core-book Advanced Rules differ, the 2026-27 module wins. Differences are listed in battlescroll_changes_to_core."
+  },
+  "sources": [
+    {
+      "url": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf",
+      "what": "Official Core Rules PDF ('Core Rules, Spearhead Rules, Terrain list and Glossary'), April 2025 revision, the current download on WarCom. Core Rules 1.0-33.0 plus core-book Advanced Rules (Commands, Terrain, Magic, Army Composition, Command Models, Battle Tactics).",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf",
+      "what": "Official Rules Updates PDF, OCTOBER 2026 (errata, addenda, FAQ for Core Rules, Advanced Rules, Glossary, GHB 2024-25 / 2025-26 / 2026-27). Latest update found.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://assets.warhammer-community.com/eng_30-06_warhammer_age_of_sigmar_using_the_scourge_of_aqshy_rules-mfzsg5z6eg-twfmfgwynu.pdf",
+      "what": "Official 'Using the Scourge of Aqshy Rules' PDF (30 Jun 2026): seasonal warscrolls and faction rules for GHB 2026-27.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://www.warhammer-community.com/en-gb/downloads/warhammer-age-of-sigmar/",
+      "what": "WarCom AoS downloads page (documents listed via its downloads search API): confirms Rules Updates last_updated 28/10/2026, Core Rules last_updated 02/04/2025, Using the Scourge of Aqshy Rules 30/06/2026.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://www.warhammer-community.com/en-gb/articles/yb8viq2m/head-to-aqshy-with-the-new-generals-handbook/",
+      "what": "WarCom 'Head to Aqshy with the new General's Handbook' (1 Jun 2026): GHB contents, season rules Raising the Heat / Simmering Rage / Eruption of Fury / Fight Through the Pain.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://www.warhammer-community.com/en-gb/articles/ilauiwfp/threshold-tactics-on-the-new-generals-handbook/",
+      "what": "WarCom guest article 'Threshold Tactics on the new General's Handbook' (19 Jun 2026): battle tactic card structure (two cards, Affray->Strike->Domination), Master of Arms 5 VP, Activate Place of Power 2026-27 options, terrain changes, faction terrain charging.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://www.warhammer-community.com/en-gb/articles/iix3g22a/warhammer-age-of-sigmar-october-update/",
+      "what": "WarCom 'Warhammer Age of Sigmar: October Update' (28 Oct 2026): accompanies the Oct 2026 Rules Update/Battle Profiles; mostly faction/profile changes, no new core/command changes mentioned.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://wahapedia.ru/aos4/the-rules/the-core-rules/",
+      "what": "Wahapedia AoS4 core rules page. States Rules Updates Oct 2026 included -> allowed. Used for the 2026-27 Commands/Terrain/Magic/Army Composition/Command Models modules.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/",
+      "what": "Wahapedia GHB 2026-27 page. States 'June 2026' only -> earlier than the Oct 2026 update, so it does NOT meet your rule; used only where flagged (battlepack steps, battle tactics VP/rules text, Seizing the Initiative, battleplan scoring).",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://spruesandbrews.com/2026/06/20/generals-handbook-2026-27-review-warhammer-age-of-sigmar/",
+      "what": "Sprues & Brews GHB 2026-27 review (20 Jun 2026): fury level 1-7, rage dice, 6 new battle tactic cards, 'fewer changes to the core rules' than last year.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://frontlinegaming.org/2026/06/19/age-of-sigmar-generals-handbook-2026-27-tactics-preview/",
+      "what": "Frontline Gaming preview of the Threshold Tactics article (19 Jun 2026): Affray/Strike/Domination kept, six new cards, fury capped at 7.",
+      "date_checked": "2026-11-10"
+    },
+    {
+      "url": "https://frontlinegaming.org/2026/09/23/age-of-sigmar-balance-update-tweaks-powerful-season-rules-and-opens-list-building/",
+      "what": "Frontline Gaming on the Sept 2026 quarterly Battlescroll (23 Sep 2026): faction/profile balance; no core-rule changes described.",
+      "date_checked": "2026-11-10"
+    }
+  ],
+  "pregame": [
+    {
+      "step": "1. Pick armies",
+      "detail": "Each player builds a roster with Army Composition 2026-27: pick a points limit (1000 or 2000), faction, battle formation, regiments (1 Hero + 0-3 non-Hero units; general's regiment 0-4; max 5 regiments), auxiliary units (2nd and later cost a cumulative +20/+40/+60... pts surcharge), up to 1 faction terrain feature, 1 enhancement per enhancement table, up to 1 spell lore, 1 prayer lore and 1 manifestation lore, and up to 2 battle tactics cards (written on the roster). No more than half your points on one unit.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "step": "1a. Roster-derived bonuses to note now",
+      "detail": "(a) Underspend: if your army is 50+ points under the limit, +1 CP at the start of battle round 1 only. (b) Auxiliary units: the player with fewer auxiliary units on their roster gets +1 CP at the start of EACH battle round (none if tied). (c) Regimented Forces: if you have more regiments than your opponent at the start of the battle, once per battle you can re-roll your priority roll after seeing both rolls.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "step": "2. Determine the battleplan",
+      "detail": "One player rolls a D6 to choose the table (1-3 table 1, 4-6 table 2); the other player rolls a D6 for the battleplan on that table. Or the players simply pick one. Table 1: Into the Fire, Bloodstained Coasts, Avalanche of Ash, Caverns of Slaughter, What's Yours is Ours, Hidden Under Ash-clouds. Table 2: Warped Ruins, Curse of the Gnaw, Seize the Embers, Treacherous Ground, Escape From the Coast, Power of the Realms. (Tournaments usually fix the battleplan per round.) confidence: wahapedia-GHB-only; WarCom confirms 12 battleplans.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "3. Attacker and defender",
+      "detail": "Players roll off; the winner chooses who is attacker and who is defender.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "4. Defender sets up objectives",
+      "detail": "The defender places the Aqshian objectives (6 special markers: 2 Sun Seekers, 2 Golden Lions, 1 Heldenhain, 1 Scions of the Comet) where the battleplan map shows them. The objective is the 40mm centre; its control zone extends 3\" from it, and a unit must be in the control zone to contest it. Two objectives of the same type form a 'pair'. confidence: wahapedia-GHB-only.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "5. Defender sets up terrain",
+      "detail": "The defender sets up terrain features (recommended 4 small + 4 medium on 44\"x60\"): each more than 3\" from the battlefield edge, more than 3\" from all objectives and more than 6\" from all other terrain, or use the battleplan's terrain layout map with the same spacing. Players agree terrain types (Obstacle, Obscuring, Area, Place of Power, Faction Terrain) before the battle. confidence: wahapedia-GHB-only for the numbers; terrain types from Terrain 2026-27.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "6. Attacker picks territory",
+      "detail": "After objectives and terrain are set up, the attacker picks which territory is theirs; the other is the defender's.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "7. Reveal battle tactics cards",
+      "detail": "You must tell your opponent which battle tactics cards you picked. Battle Tactics 2026-27 says 'Before deployment'; the battlepack text says 'At the start of the battle'. If a card makes you pick something (e.g. a hideout or a fugitive), tell your opponent. SOURCES DIFFER on the exact moment; revealing before deployment satisfies both.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "8. Battle length",
+      "detail": "5 battle rounds.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "9. Deployment phase, step 1: Deploy faction terrain",
+      "detail": "The player who begins deployment (the attacker) uses any 'Deploy Faction Terrain' abilities first, then the opponent. Optional (Oct 2026 FAQ: you don't have to set it up). Placement: wholly within friendly territory, more than 3\" from all objectives and other terrain.",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "step": "10. Deployment phase, step 2: Deploy armies (alternating drops)",
+      "detail": "Starting with the attacker, players alternate using DEPLOY abilities. 'Deploy Regiment' sets up a whole regiment as one drop (keep using Deploy abilities without alternating until every unit in that regiment is deployed; none of its units can already be deployed, and you can't set up other units, on the battlefield or in reserve, during it). 'Deploy Unit' sets up one unit wholly within friendly territory and more than 9\" from enemy territory. Faction Deploy abilities (e.g. reserves) also count as Deploy abilities. Once one player runs out of Deploy abilities, the other keeps deploying until they also run out. 'Drops' = minimum number of Deploy abilities needed, usually regiments + auxiliary units (Oct 2026 glossary addendum). Oct 2026 FAQ: you may deploy a regiment's units one at a time with 'Deploy Unit', but then you can't use 'Deploy Regiment' for the rest of that regiment.",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "step": "11. Who 'finished setting up first'",
+      "detail": "A player has finished setting up their army once all units in their army have been deployed. Non-Deploy deployment phase abilities happen after that and don't count (Oct 2026 FAQ on 12.0).",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "step": "12. Deployment phase, step 3: other Deployment Phase abilities",
+      "detail": "After both players finish deploying, the player who began deployment uses any other Deployment Phase abilities (not Deploy / Deploy Terrain) in any order, then the opponent does the same. Season rule 'Raising the Heat' (Once Per Battle (Army), Deployment Phase) is used here: the attacker sets their fury level to 1, the defender to 2.",
+      "source": "https://www.warhammer-community.com/en-gb/articles/yb8viq2m/head-to-aqshy-with-the-new-generals-handbook/"
+    },
+    {
+      "step": "13. First objective-control check",
+      "detail": "Per the Oct 2026 erratum to 32.2, objective control is determined in the deployment phase once all Deployment Phase abilities have been used. Previously this was 'at the start of the first battle round'. Then again at the end of each turn.",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "step": "14. Battle tactic card set-up picks",
+      "detail": "Some cards resolve a pick 'after using all Deployment Phase abilities but before determining which player will take the first turn'. Examples: Blazing Onslaught (your opponent picks a non-Faction-Terrain terrain feature in their territory as their hideout) and Burning for Vengeance (you pick an enemy Hero, on the battlefield or in reserve, as the fugitive). confidence: wahapedia-GHB-only; corroborated by the WarCom Threshold Tactics article.",
+      "source": "https://www.warhammer-community.com/en-gb/articles/ilauiwfp/threshold-tactics-on-the-new-generals-handbook/"
+    },
+    {
+      "step": "15. Choose first turn in battle round 1",
+      "detail": "The player who finished setting up their army first decides who takes the first turn in battle round 1. No priority roll in round 1. NOT FOUND: any GHB 2026-27 override of this core rule; none seen.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "step": "16. Underdog during deployment",
+      "detail": "There is no underdog during the deployment phase (Oct 2026 FAQ, Hidden Under Ash-clouds).",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    }
+  ],
+  "battle_round": [
+    {
+      "step": "1. Determine the active player (priority)",
+      "detail": "Battle round 1: the player who finished setting up first chooses. From round 2: roll off (the priority roll); the winner decides who takes the first turn. On a tie, the player who took the first turn in the previous battle round decides. Regimented Forces (Army Composition 2026-27, 3.1.1): the player with more regiments can, once per battle, re-roll their priority roll after seeing both rolls and before priority is decided.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "step": "2. Seizing the initiative (GHB 2026-27)",
+      "detail": "If the player who went second in the previous round wins priority and chooses to go first (taking two turns in a row), they 'seize the initiative', unless their opponent leads by 11 or more VP. Effects: the seizing player can't complete any battle tactics that turn, and their opponent counts as the underdog until that opponent seizes the initiative themselves. confidence: wahapedia-GHB-only; the official Oct 2026 PDF has no text for this rule.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "3. Determine the underdog",
+      "detail": "The player with the fewest VP is the underdog for the battle round. If tied, there is no underdog that round (Oct 2026 glossary erratum removed 'unless otherwise specified'-style ambiguity: 'If tied, there is no underdog for that battle round'). GHB 2026-27 override: a player whose opponent seized the initiative counts as underdog until they seize it back. Some battleplan twists key off the underdog.",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "step": "4. Gain command points",
+      "detail": "After the underdog is determined, each player gains 4 CP. The underdog (if any) gains +1. The player with fewer auxiliary units gains +1 each round (none if tied). In round 1 only, a player who underspent by 50+ points gains +1. CP are reset to 0 at the end of the battle round: unspent CP are LOST.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "step": "5. Start of Battle Round abilities",
+      "detail": "The active player uses any Start of Battle Round abilities first, then the opponent. Season rule 'Simmering Rage' (Once Per Turn (Army), Start of Battle Round, MANDATORY): gain rage dice equal to your fury level. Unspent rage dice are lost at the end of the battle round. Battleplan twists also happen here, e.g. in Hidden Under Ash-clouds the underdog picks whether the ash-clouds are low-lying (low-lying if there is no underdog), and in Caverns of Slaughter the underdog's Shifting Passages.",
+      "source": "https://www.warhammer-community.com/en-gb/articles/yb8viq2m/head-to-aqshy-with-the-new-generals-handbook/"
+    },
+    {
+      "step": "6. Reserves deadline",
+      "detail": "At the start of the FOURTH battle round, units that were set up in reserve using a DEPLOY ability and are still in reserve are destroyed (Core Rules 24.1; unchanged in the Oct 2026 update).",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "step": "7. Battle tactics: no per-round pick",
+      "detail": "In GHB 2026-27 there is NO per-turn or per-round battle tactic choice. The core-book 'Tactical Gambit' (pick 1 tactic at the start of your turn, 4 VP) is replaced. Your 2 cards are fixed at list building and you check completion at the end of each of your turns (see ghb_2026_27).",
+      "source": "https://www.warhammer-community.com/en-gb/articles/ilauiwfp/threshold-tactics-on-the-new-generals-handbook/"
+    },
+    {
+      "step": "8. Two turns",
+      "detail": "The active player takes their turn (Start of Turn, Hero, Movement, Shooting, Charge, Combat, End of Turn), then the other player becomes the active player and takes theirs.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "step": "9. End of battle round",
+      "detail": "The active player uses any End of Battle Round abilities, then the opponent. CP reset to 0 and unspent rage dice are lost. If the last battle round (round 5) has finished, the battle ends: work out the winner from the battleplan and battlepack.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "Start of Turn",
+      "order": [
+        "The active player uses Start of Your Turn / Start of Any Turn abilities, then the opponent uses Start of Enemy Turn / Start of Any Turn abilities (general 13.0 sequence).",
+        "Activate Place of Power (Terrain 2026-27): Once Per Turn (Army), Start of Any Turn, CORE keyword. Can be used by either player."
+      ],
+      "rules": [
+        "Each turn has 7 phases: Start of Turn, Hero, Movement, Shooting, Charge, Combat, End of Turn.",
+        "In every phase: the active player uses 'Your (X) Phase' and 'Any (X) Phase' abilities in any order, then the opponent uses 'Enemy (X) Phase' and 'Any (X) Phase' abilities.",
+        "Using any ability: 1) Declare it, resolving its Declare instructions. 2) Reactions: starting with the player who used the ability, players alternate using Reaction abilities or passing; once both players pass consecutively, no more reactions to it (Oct 2026 erratum to 5.2). 3) Resolve the effect.",
+        "Rules of One: max 1 CORE ability per unit per phase; a unit can't use the same ability more than once per phase; a unit can't be affected by the same passive ability more than once at a time. Commands: max 1 command per unit per phase, and each command max once per army per phase.",
+        "Non-passive abilities are optional. Passive abilities, and abilities that say 'must', are mandatory (Oct 2026 FAQ)."
+      ],
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "phase": "Hero",
+      "order": [
+        "The active player uses Your Hero Phase / Any Hero Phase abilities in any order: spells (casting), prayers (chanting), Sacred Rites, Banish Manifestation, Rally, warscroll and faction hero-phase abilities. The opponent can react with Unbind (to spells), All-out Defence (to Attack abilities) and so on.",
+        "Then the opponent uses Enemy Hero Phase / Any Hero Phase abilities, e.g. Rally (1 CP) and Magical Intervention (1 CP)."
+      ],
+      "rules": [
+        "Casting: the spell's declare step has you roll 2D6 (the casting roll). It must equal or beat the casting value or the spell fails. Miscast: if the UNMODIFIED roll has two or more 1s, the spell fails, the Wizard takes D3 mortal damage and can't cast more spells this phase. Enemy reactions (Unbind) can only be used if the casting roll equals or beats the casting value.",
+        "Unbind (reaction to an enemy declaring a SPELL): a friendly Wizard within 30\" of the casting Wizard rolls 2D6; if it EXCEEDS the casting roll, the spell is unbound. Only once per casting roll. Each Wizard can Unbind a number of times per phase equal to its power level (an exception to the Rules of One).",
+        "Power level (Magic 2026-27): the casting power level (Wizard (X)) = number of SPELL abilities per phase; the chanting power level (Priest (X)) = number of PRAYER abilities per phase. If a unit has two power levels, abilities that reference power level use the higher; modifiers to power level affect both. (Core book 2025: power level counted SPELL, PRAYER and BANISH together.)",
+        "Chanting: roll D6 (the chanting roll). An unmodified 1 fails and removes D3 ritual points from the Priest. Otherwise EITHER bank ritual points equal to the roll (they carry over between turns) OR add the Priest's ritual points to the roll; if the total equals or beats the chanting value, the prayer is answered: resolve it, then reset ritual points to 0.",
+        "Sacred Rites (Magic 2026-27): every Priest knows it. Your Hero Phase, PRAYER, UNLIMITED, chanting value 2 (per the Oct 2026 erratum to GHB 2025-26). Declare: roll the chanting roll; on an unmodified 1, lose 1 ritual point instead of D3. Effect: gain ritual points equal to the unmodified chanting roll and do NOT reset to 0.",
+        "Jealous Mages and Fickle Gods: only 1 friendly Wizard can cast the same spell per turn, and only 1 Priest chant the same prayer, unless it is UNLIMITED. Each spell or prayer is once per unit per phase.",
+        "Manifestations: only 1 friendly Wizard or Priest can attempt to summon the same manifestation per turn, and you can't re-summon one that was removed from play the same turn (Oct 2026). Severed connection: if the unit that summoned it is destroyed, the manifestation is removed.",
+        "Banish Manifestation (Magic 2026-27): used INSTEAD of a SPELL or PRAYER, including through Magical Intervention. Target a manifestation within 30\" that was not summoned this turn; roll 2D6 +1 for each additional enemy manifestation on the battlefield after the first; it must equal or beat the banishment value. The same manifestation can be targeted only once per turn.",
+        "Activate Place of Power, Channel Wrath option: +1 to casting or chanting rolls for that Hero for the rest of the turn."
+      ],
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "phase": "Movement",
+      "order": [
+        "The active player picks units one at a time to use Normal Move, Run or Retreat (one CORE ability per unit per phase). At the Double (1 CP) is a reaction to declaring a Run.",
+        "Then the opponent can use Enemy Movement Phase abilities, e.g. Redeploy (1 CP)."
+      ],
+      "rules": [
+        "Normal Move: unit not in combat; move up to Move; can't move into combat at any point.",
+        "Run: unit not in combat; roll D6 (the run roll), then move up to Move + roll; can't move into combat. A unit that Ran can't Shoot or Charge that turn. Random characteristics (e.g. a random Move) are rolled after Run is declared and reactions are used.",
+        "Retreat: unit in combat; it takes D3 mortal damage, then moves up to its Move. It can pass through enemy combat ranges but can't END within one. A unit that Retreated can't Shoot or Charge that turn.",
+        "Moving: no part of a base can move further than the allowed distance; no moving through models or off the battlefield; end every move in coherency (1/2\" horizontally; units of 7+ models need each model within coherency of 2 others) as a single group. Terrain 1\" or less high is ignored; climbing counts vertical distance; can't end a move mid-climb; jumping down ends the move.",
+        "Fly: ignores models, terrain and enemy combat ranges while moving, and vertical distance; still can't end in combat unless the ability allows it. Fly can cross enemy combat ranges during a Normal Move (Oct 2026 FAQ).",
+        "Combat range is 3\" horizontally (infinite vertically) from each model's base. Units are 'in combat' if they are within each other's combat range and visible.",
+        "Units set up on the battlefield outside the deployment phase can't use MOVE abilities in the movement phase of that same turn (they can move before being set up).",
+        "Overhanging models (Oct 2026 addendum 15.5): ignore overhangs when placing models; rotate models so others can fit, or mark the position and set the model aside.",
+        "Unstable terrain: you can't end a move on parts more than 1\" tall. Impassable: can't move across or end on it."
+      ],
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "phase": "Shooting",
+      "order": [
+        "The active player picks units to use Shoot one at a time. All-out Attack (1 CP) is a reaction by the attacker; All-out Defence (1 CP) is a reaction by the defender.",
+        "Then the opponent can use Covering Fire (1 CP) in the Enemy Shooting Phase."
+      ],
+      "rules": [
+        "Shoot: a unit that has not used Run or Retreat this turn picks targets for all its attacks when declaring. A unit in combat can't shoot unless its weapon has Shoot in Combat, and if in combat it can only target units it is in combat with. It must shoot with all its ranged weapons (Oct 2026 FAQ). Only models that can see the target attack it.",
+        "Each target must be within the weapon's Range and visible to the attacking model, with range and visibility met by the same model in the target (Oct 2026 addendum 6.0).",
+        "Guarded Hero: a non-Monster, non-War Machine Hero within the combat range of a friendly non-Hero unit gives -1 to hit for shooting attacks against it. If it is Infantry, it can't be targeted by shooting from MODELS more than 12\" away (Oct 2026 erratum: models, not units).",
+        "Cover (Terrain 2026-27): -1 to hit attacks targeting a unit behind or wholly on the terrain, unless that unit charged this turn or has Fly. 'Behind' = no straight line from the closest point of the attacking model's base to the closest point of an in-range target model's base without crossing the terrain; ignore terrain within the attacker's combat range.",
+        "Obscuring (Terrain 2026-27): while every model of a non-Monster, non-War Machine, non-Fly unit is within 1\" of the terrain, that unit is visible only to enemy units within its combat range, and its own ranged weapons have their Range halved (rounded down). Under 2026-27, only Obscuring Terrain has this ability; Area Terrain and Places of Power do not (WarCom Threshold Tactics).",
+        "The attack and damage sequences are as in the Combat phase."
+      ],
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "phase": "Charge",
+      "order": [
+        "The active player picks units to Charge one at a time. Forward to Victory (1 CP) is a reaction to declaring a Charge.",
+        "Then the opponent can use Counter-charge (2 CP) in the Enemy Charge Phase."
+      ],
+      "rules": [
+        "Charge: a unit not in combat that has not used Run or Retreat this turn rolls 2D6 (the charge roll) and moves up to that many inches. It can move through enemy combat ranges and must end within 1/2\" of a visible enemy unit; if it does, it has 'charged'. Visibility is checked at the END of the move (Oct 2026 FAQ). Adding or removing dice from a charge roll is not a modifier (FAQ).",
+        "'Finishing a charge move' = when a Charge Move ability that unit used resolves and the unit has charged (Oct 2026 addendum 15.6).",
+        "You can finish a charge within 1/2\" of an enemy manifestation instead of a unit. Faction terrain (Terrain 2026-27): enemy units can finish a charge within 1/2\" of a faction terrain feature only if it is GARRISONED.",
+        "Charging units on terrain: if a unit is wholly on terrain you can't reach, you can end within 1/2\" of that terrain if that puts you in combat with the units on it.",
+        "Charge (+1 Damage) weapons and the Cover exception ('unless that unit charged this turn') key off 'charged'."
+      ],
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "phase": "Combat",
+      "order": [
+        "1. The active player uses Combat Phase abilities that are NOT Fight abilities, then the opponent does the same.",
+        "2. Strike-first: if any Strike-first units are in combat after those abilities, only Strike-first units can be picked to fight until all of them have fought (players alternate among them, starting with the active player). Then the active player picks the next unit to fight. (Oct 2026 erratum to 19.0: 'after any non-Fight combat phase abilities have been used' replaces 'at the start of the phase'.)",
+        "3. The players alternate picking 1 eligible unit to use a FIGHT ability, starting with the active player. Every unit in combat must fight if able. Units that charged this turn can fight even if no longer in combat. Once one player has no eligible units left, the other fights with all their remaining units one after another.",
+        "4. Strike-last units can't be picked while any non-Strike-last unit in combat has yet to fight. The alternating sequence carries on into Strike-last units: the player who did NOT pick the last non-Strike-last unit picks first (Oct 2026 FAQ; the glossary text 'starting with the active player' was deleted). A unit with both Strike-first and Strike-last has neither.",
+        "Reactions during each Fight: All-out Attack (attacker, 1 CP) and All-out Defence (defender, 1 CP)."
+      ],
+      "rules": [
+        "Fight: pick a unit in combat or that charged this turn; it may make a pile-in move; then, if it is in combat, pick targets (units it is in combat with, within each model's combat range and visible). It attacks with ALL its melee weapons.",
+        "Pile-in: each model can move up to 3\". If the unit is in combat, pick an enemy unit it is in combat with as the pile-in target; each model must end no further from it, and the unit must stay in combat with every unit it started in combat with. If not in combat, each model can move 3\" in any direction, including into combat. Faction terrain with Move '-' can't pile in.",
+        "Abilities that let a unit fight 'immediately after' another don't override Strike-first or Strike-last.",
+        "Attack sequence, per attack: (1) Hit roll D6 >= Hit; an unmodified 1 always fails; an unmodified 6 is a critical hit. (2) Wound roll D6 >= Wound; an unmodified 1 fails. (3) Save roll: the defender rolls D6 minus Rend; an unmodified 1 fails; if the result >= Save the attack fails. (4) Damage: add the weapon's Damage to the target's damage pool. Resolve all attacks against one target before the next.",
+        "Modifier caps: hit and wound modifiers are capped at +1/-1 in total. Save modifiers are capped at +1 with NO cap on negative modifiers. Re-rolls happen before modifiers, and no dice can be re-rolled more than once (Oct 2026 addendum 2.2). Characteristics can't go below 1 except Rend (min 0).",
+        "Crit effects: Crit (2 Hits) = 2 hits, wound-roll each; Crit (Auto-wound) = skip the wound roll; Crit (Mortal) = mortal damage equal to Damage and the sequence ends. If a weapon has several crit abilities, pick 1 before rolling. A crit on a roll that still fails to hit triggers only immediate effects such as Crit (Mortal) (Oct 2026 FAQ).",
+        "Anti-X (+1 Rend) stacks across different conditions, but the same instance from two sources doesn't stack (FAQ). Companion weapons ignore friendly abilities that modify hit or wound rolls or weapon characteristics, except negative modifiers (Oct 2026 erratum); Champion (+1 Attacks) affects Companion weapons only for BEAST units (Command Models 2026-27).",
+        "Damage sequence (after the whole ability resolves): for each damaged unit, one at a time, commanders allocating starting with the active player: (1) ward saves, rolling D6 per damage point and removing it on >= ward value (only the best ward applies); (2) allocate points one at a time; each time allocated damage = Health, 1 model is slain and the count resets. Remove slain models while keeping the unit coherent, removing the fewest models needed (Oct 2026). Excess damage on a destroyed unit is lost.",
+        "Season rule 'Fight Through the Pain' (Passive): before allocating damage to a friendly unit you can spend any number of rage dice, all at once (FAQ). For each, reduce your fury level by 1 (min 0) and roll a D6; on 3+ remove 1 damage point from the pool. Not usable by manifestations or faction terrain. NOT FOUND: whether it goes before or after ward saves. 'Before allocating' implies after wards (step 1) and before allocation (step 2), but no explicit ruling found.",
+        "Mortal damage goes straight into the damage pool (no hit, wound or save rolls; ward rolls still apply).",
+        "Heal (X): remove X allocated damage points."
+      ],
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "phase": "End of Turn",
+      "order": [
+        "1. The active player uses End of Your Turn / End of Any Turn abilities in any order (e.g. Power Through 1 CP, Eruption of Fury), then the opponent uses End of Enemy Turn / End of Any Turn abilities (they can also use Power Through and Eruption of Fury).",
+        "2. Determine control of each objective (in an order the active player picks). Units contesting 2+ objectives: the active player assigns each of their units to one, then the opponent does.",
+        "3. The active player scores VP as the battleplan describes.",
+        "Battle tactics: at the end of your turn, complete (and score) up to 1 tactic on each of your 2 cards if the conditions are met. This is mandatory if possible. NOT FOUND: the exact step within End of Turn where tactics are checked relative to steps 1-3. Conditions like 'if you control X at the end of your turn' imply after control is determined."
+      ],
+      "rules": [
+        "Objectives (Core 32): a model contests an objective within its combat range (3\"); for GHB Aqshian objectives, a unit must be within the 3\" control zone around the 40mm marker. Control score = sum of Control of contesting models (min 1 if modified); each player sums their units; the higher total gains control, and it STAYS until the opponent gains it. A unit counts for only 1 objective and 1 terrain feature when determining control (Oct 2026). Terrain control is lost as soon as you stop contesting it.",
+        "Standard Bearer: +1 to that unit's control score while it has any standard bearers.",
+        "Faction terrain can't contest objectives, even when garrisoned (Terrain 2026-27).",
+        "Scoring is at the end of EACH TURN, by the active player only (each player scores at the end of their own turns). Typical GHB 2026-27 primary: 3 VP for controlling at least 1 objective, 3 VP for 2+, 4 VP for more than your opponent; varies by battleplan. confidence: wahapedia-GHB-only."
+      ],
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    }
+  ],
+  "core_abilities": [
+    {
+      "name": "Normal Move",
+      "cost": null,
+      "timing": "Your Movement Phase",
+      "keywords": "CORE, MOVE",
+      "declare": "Pick a friendly unit that is not in combat.",
+      "effect": "Move up to its Move characteristic; it can't move into combat at any point.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Run",
+      "cost": null,
+      "timing": "Your Movement Phase",
+      "keywords": "CORE, MOVE, RUN",
+      "declare": "Pick a friendly unit that is not in combat.",
+      "effect": "Roll D6 (the run roll); move up to Move + roll; can't move into combat. It can't Shoot or Charge later that turn (those abilities require no Run or Retreat).",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Retreat",
+      "cost": null,
+      "timing": "Your Movement Phase",
+      "keywords": "CORE, MOVE, RETREAT",
+      "declare": "Pick a friendly unit that is in combat.",
+      "effect": "Inflict D3 mortal damage on it; it moves up to its Move, can pass through enemy combat ranges but can't end in one. It can't Shoot or Charge that turn.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Shoot",
+      "cost": null,
+      "timing": "Your Shooting Phase",
+      "keywords": "CORE, ATTACK, SHOOT",
+      "declare": "Pick a friendly unit that has not used Run or Retreat this turn, then pick one or more enemy targets for its attacks.",
+      "effect": "Resolve shooting attacks against the target(s).",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Charge",
+      "cost": null,
+      "timing": "Your Charge Phase",
+      "keywords": "CORE, MOVE, CHARGE",
+      "declare": "Pick a friendly unit not in combat that has not used Run or Retreat this turn, then roll 2D6 (the charge roll).",
+      "effect": "Move up to the charge roll; may pass through enemy combat ranges; must end within 1/2\" of a visible enemy unit (or an enemy manifestation, or a garrisoned enemy faction terrain feature). If it does, it has charged.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Fight",
+      "cost": null,
+      "timing": "Any Combat Phase (in the alternating fight sequence)",
+      "keywords": "CORE, ATTACK, FIGHT",
+      "declare": "Pick a friendly unit in combat or that charged this turn. It may pile in (3\"). Then, if in combat, pick one or more enemy units it is in combat with as targets.",
+      "effect": "Resolve combat attacks against the target(s).",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Pile-in move (part of Fight)",
+      "cost": null,
+      "timing": "Declare step of Fight (and other abilities that allow it)",
+      "keywords": "move (Faction terrain with Move '-' can't pile in)",
+      "declare": "If in combat, pick an enemy unit in combat with you as the pile-in target.",
+      "effect": "Each model moves up to 3\". In combat: must end no further from the target and stay in combat with every unit it was already in combat with; can pass through enemy combat ranges. Not in combat: 3\" in any direction, may end in combat.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Deploy Regiment",
+      "cost": null,
+      "timing": "Deployment Phase",
+      "keywords": "DEPLOY",
+      "declare": "Pick a regiment on your roster with no units yet deployed.",
+      "effect": "Keep using Deploy abilities without alternating until all its units are deployed; you can't set up units from outside it, on the battlefield or in reserve, during those abilities (Oct 2026 wording).",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "name": "Deploy Unit",
+      "cost": null,
+      "timing": "Deployment Phase",
+      "keywords": "DEPLOY",
+      "declare": "Pick an undeployed unit on your roster.",
+      "effect": "Set it up wholly within friendly territory and more than 9\" from enemy territory.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Deploy Faction Terrain",
+      "cost": null,
+      "timing": "Deployment Phase (step 1; player who begins deployment first)",
+      "keywords": "DEPLOY TERRAIN",
+      "declare": "Pick an undeployed friendly faction terrain feature.",
+      "effect": "Set it up wholly within friendly territory, more than 3\" from all objectives and other terrain features. Optional.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Rally",
+      "cost": "1 CP",
+      "timing": "Any Hero Phase",
+      "keywords": "Command",
+      "declare": "Pick a friendly unit that is not in combat.",
+      "effect": "Roll 6 D6 (7 if the unit has a Musician); each 4+ = 1 rally point. Spend 1 point to Heal (1), or points equal to the unit's Health to return 1 slain model, in any combination; leftover points are lost. Can't take a replacement unit above its new unit size (FAQ).",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Magical Intervention",
+      "cost": "1 CP",
+      "timing": "Enemy Hero Phase",
+      "keywords": "Command",
+      "declare": "Pick a friendly Wizard or Priest.",
+      "effect": "It can use a SPELL, PRAYER or BANISH ability as if it were your hero phase, with -1 to casting or chanting rolls for it. (Core book 2025: SPELL or PRAYER only. Magic 2026-27 adds BANISH.)",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Redeploy",
+      "cost": "1 CP",
+      "timing": "Enemy Movement Phase",
+      "keywords": "Command; MOVE, RUN",
+      "declare": "Pick a friendly unit that is not in combat.",
+      "effect": "Each model can move up to D6\"; the move can't pass through or end within an enemy unit's combat range. Because it has the RUN keyword, the unit then counts as having Run that turn (it is the enemy's turn).",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "At the Double",
+      "cost": "1 CP",
+      "timing": "Reaction: you declared a RUN ability",
+      "keywords": "Command",
+      "declare": "Used by the unit using that Run ability.",
+      "effect": "Don't make a run roll; add 6\" to its Move for that Run instead.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Covering Fire",
+      "cost": "1 CP",
+      "timing": "Enemy Shooting Phase",
+      "keywords": "Command; SHOOT, ATTACK",
+      "declare": "Pick a friendly unit that did not Run this turn and is not in combat, then pick the CLOSEST enemy unit that can be targeted by shooting attacks. Manifestations and faction terrain can't be picked.",
+      "effect": "Resolve shooting attacks against that target with -1 to hit. (The GHB 2025-26 printed timing was changed to 'Enemy Shooting Phase' by erratum; 2026-27 prints Enemy Shooting Phase.)",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Forward to Victory",
+      "cost": "1 CP",
+      "timing": "Reaction: you declared a CHARGE ability",
+      "keywords": "Command",
+      "declare": "Used by the unit using that Charge.",
+      "effect": "You can re-roll the charge roll.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Counter-charge",
+      "cost": "2 CP",
+      "timing": "Enemy Charge Phase",
+      "keywords": "Command",
+      "declare": "Pick a friendly unit that is not in combat.",
+      "effect": "It can use a CHARGE ability as if it were your charge phase. Cost is 2 CP in the April 2025 core PDF, the 2026-27 Commands module and the Oct 2026 glossary erratum ('Counter-charge: Command, 2CP'). The original 2024 launch cost was 1 CP.",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "name": "All-out Attack",
+      "cost": "1 CP",
+      "timing": "Reaction: you declared an ATTACK ability (Shoot, Fight, Covering Fire, Eruption of Fury, etc.)",
+      "keywords": "Command",
+      "declare": "Used by the unit using that Attack ability.",
+      "effect": "+1 to hit for those attacks, including Companion weapons. Commands 2026-27 adds a drawback: for the rest of the turn, subtract 1 from save rolls for that unit. Using it in both shooting and combat doesn't stack to -2 (FAQ: persisting effects count as passive). The core book 2025 version has no save penalty.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "All-out Defence",
+      "cost": "1 CP",
+      "timing": "Reaction: opponent declared an ATTACK ability",
+      "keywords": "Command",
+      "declare": "Used by a unit targeted by that Attack ability.",
+      "effect": "+1 to save rolls for that unit until that Attack ability has resolved (Commands 2026-27). The core book 2025 says 'in this phase'; the 2026-27 module is narrower.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Power Through",
+      "cost": "1 CP",
+      "timing": "End of Any Turn",
+      "keywords": "Command; MOVE",
+      "declare": "Pick a friendly unit that charged this turn, then you must pick an enemy unit in combat with it that has a LOWER Health characteristic.",
+      "effect": "Inflict D3 mortal damage on the target; then the unit can move up to its Move. It can pass through and end within the combat ranges of enemy units it was in combat with at the start of the move (but not others), and doesn't have to end in combat.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Unbind",
+      "cost": null,
+      "timing": "Reaction: opponent declared a SPELL ability (only if the casting roll met the casting value)",
+      "keywords": "UNBIND (the GHB 2025-26 printing said Prayer; corrected by erratum)",
+      "declare": "Used by a friendly Wizard within 30\" of the casting Wizard.",
+      "effect": "Roll 2D6; if it EXCEEDS the casting roll, the spell is unbound. Once per casting roll; uses per phase = power level.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Banish Manifestation",
+      "cost": null,
+      "timing": "Your Hero Phase (or the Enemy Hero Phase via Magical Intervention)",
+      "keywords": "BANISH",
+      "declare": "Instead of a Spell or Prayer, pick a friendly Wizard or Priest and a manifestation within 30\" that was not summoned this turn; roll 2D6 +1 per additional enemy manifestation on the battlefield after the first. You can't target the same manifestation more than once per turn.",
+      "effect": "If the roll equals or beats its banishment value, it is banished and removed from play.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Sacred Rites",
+      "cost": null,
+      "timing": "Your Hero Phase",
+      "keywords": "PRAYER, UNLIMITED (chanting value 2)",
+      "declare": "Pick a friendly Priest; roll the chanting roll. On an unmodified 1, remove 1 ritual point instead of D3.",
+      "effect": "Gain ritual points equal to the unmodified chanting roll; don't reset to 0.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Activate Place of Power",
+      "cost": null,
+      "timing": "Once Per Turn (Army), Start of Any Turn",
+      "keywords": "CORE",
+      "declare": "Pick a friendly Hero within 3\" of any Place of Power.",
+      "effect": "Roll a D6: on a 1 the Hero takes D3 mortal damage. On a 2+ pick one: Ignite Fury (gain 2 rage dice and raise your fury level by 2, max 7); Channel Wrath (a Wizard or Priest gets +1 to casting or chanting rolls for the rest of the turn); Dizzying Rage (a non-Wizard, non-Priest Hero can Unbind or Banish as if Wizard (1) for the rest of the turn). Because it is a CORE ability, the Hero can't use another CORE ability that phase.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Raising the Heat (season)",
+      "cost": null,
+      "timing": "Once Per Battle (Army), Deployment Phase",
+      "keywords": "season rule GHB 2026-27",
+      "declare": "-",
+      "effect": "Attacker sets fury level to 1; defender sets fury level to 2.",
+      "source": "https://www.warhammer-community.com/en-gb/articles/yb8viq2m/head-to-aqshy-with-the-new-generals-handbook/"
+    },
+    {
+      "name": "Simmering Rage (season)",
+      "cost": null,
+      "timing": "Once Per Turn (Army), Start of Battle Round",
+      "keywords": "season rule; MANDATORY ('You must use this ability')",
+      "declare": "You must use it.",
+      "effect": "Gain rage dice equal to your fury level. Unspent rage dice are lost at the end of the battle round. Fury level max is 7.",
+      "source": "https://www.warhammer-community.com/en-gb/articles/yb8viq2m/head-to-aqshy-with-the-new-generals-handbook/"
+    },
+    {
+      "name": "Eruption of Fury (season)",
+      "cost": null,
+      "timing": "Once Per Turn (Army), End of Any Turn",
+      "keywords": "ATTACK, FIGHT",
+      "declare": "Pick a friendly unit and an enemy unit in combat with it as the target.",
+      "effect": "Pick one of its melee weapons and spend up to 3 rage dice; make that many combat attacks with that weapon (not added to the Attacks characteristic). No critical hits. Instead, each unmodified hit roll of 6 inflicts D3 mortal damage on EACH enemy unit in combat with the attacker AND raises your opponent's fury level by 1 (max 7). Each unmodified 1 allocates D3 mortal damage to the attacker after the damage sequence, with no ward rolls. FAQs: reactions can be used, but 'fight immediately after' effects can't make another unit fight; Strike-first and Strike-last have no effect; manifestations and faction terrain can't use it, and can only be targeted if they have a Move characteristic. Being an ATTACK ability, it can be reacted to with All-out Attack and All-out Defence.",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "name": "Fight Through the Pain (season)",
+      "cost": null,
+      "timing": "Passive (before allocating damage to a friendly unit)",
+      "keywords": "season rule",
+      "declare": "-",
+      "effect": "Spend any number of rage dice at once; for each, lower your fury level by 1 (min 0) and roll a D6; on 3+ remove 1 damage point from that unit's damage pool. Not for manifestations or faction terrain.",
+      "source": "https://www.warhammer-community.com/en-gb/articles/yb8viq2m/head-to-aqshy-with-the-new-generals-handbook/"
+    },
+    {
+      "name": "Regimented Forces (army composition)",
+      "cost": null,
+      "timing": "Once per battle, at the priority roll",
+      "keywords": "Army Composition 2026-27, 3.1.1 (originally a GHB 2025-26 season rule added by the Rules Update)",
+      "declare": "Only if you had more regiments than your opponent at the start of the battle.",
+      "effect": "Re-roll your priority roll after seeing both rolls, before priority is decided.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Guarded Hero",
+      "cost": null,
+      "timing": "Passive",
+      "keywords": "All non-Monster, non-War Machine Heroes",
+      "declare": "-",
+      "effect": "While within the combat range of a friendly non-Hero unit: -1 to hit for shooting attacks targeting it; if Infantry, it can't be targeted by shooting from MODELS more than 12\" away. Abilities that ignore the targeting restriction still suffer the -1 (FAQ).",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "name": "Ward Save",
+      "cost": null,
+      "timing": "Passive (damage sequence step 1)",
+      "keywords": "WARD (X+)",
+      "declare": "-",
+      "effect": "Roll D6 per damage point in the pool; on >= ward value remove it. Only the best ward applies.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Fly",
+      "cost": null,
+      "timing": "Passive",
+      "keywords": "FLY",
+      "declare": "-",
+      "effect": "While moving, ignore models, terrain, enemy combat ranges and vertical distance; can't end in combat unless the move ability allows it.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "name": "Champion / Musician / Standard Bearer",
+      "cost": null,
+      "timing": "Passive",
+      "keywords": "Command Models 2026-27",
+      "declare": "-",
+      "effect": "Champion: +1 Attacks to the champion's weapons (Companion weapons only if the unit is a BEAST). Musician: +1 rally roll when the unit uses Rally. Standard Bearer: +1 to the unit's control score.",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "name": "Tactical Gambit (core book only, NOT used in GHB 2026-27)",
+      "cost": null,
+      "timing": "Once Per Battle Round, Start of Your Turn",
+      "keywords": "Core-book Battle Tactics module",
+      "declare": "Not usable if you went second last round and chose to go first this round.",
+      "effect": "Pick 1 un-attempted universal battle tactic; 4 VP if completed at the end of your turn. Superseded in matched play by Battle Tactics 2026-27 cards.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    }
+  ],
+  "end_of_turn": [
+    {
+      "step": "End of turn abilities",
+      "detail": "The active player uses End of Your Turn / End of Any Turn abilities (Power Through, Eruption of Fury, faction abilities), then the opponent uses End of Enemy Turn / End of Any Turn abilities. Delayed effects that trigger at the same time: the active player resolves theirs first (Oct 2026 addendum 30.0).",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "step": "Determine objective control",
+      "detail": "Check every objective in an order chosen by the active player; units contesting 2+ objectives are assigned to one (active player first, then opponent). Control persists until the opponent gains it; terrain control lapses when no longer contested. Control is checked in the deployment phase (after Deployment Phase abilities) and at the end of EVERY turn, both yours and your opponent's (Oct 2026 erratum).",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "step": "Score victory points",
+      "detail": "The ACTIVE player scores VP per the battleplan, at the end of each of their own turns, not at the end of the round. The opponent doesn't score at the end of your turn (though objective control changes at the end of every turn).",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "step": "Battle tactics completion",
+      "detail": "At the end of your turn, if you meet a tactic's conditions and can complete it (Affray first, then Strike, then Domination on that card), you MUST complete it; max 1 per card per turn (so up to 2 per turn), 5 VP each. Not if you seized the initiative this turn. A tactic can't be completed twice unless stated (2025-26 FAQ). confidence: VP values and the 'must' wording from the wahapedia GHB page (WarCom confirms Master of Arms = 5 VP).",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    },
+    {
+      "step": "End of battle round (after the second turn)",
+      "detail": "End of Battle Round abilities (active player, then opponent); CP reset to 0; unspent rage dice lost. After round 5 the battle ends.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "step": "Reserves check (next round start)",
+      "detail": "At the start of battle round 4, units set up in reserve using a DEPLOY ability that are still in reserve are destroyed.",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "step": "Result",
+      "detail": "Major victory if 5+ VP ahead; minor victory if ahead by less than 5; if VP are tied, whoever completed more battle tactics wins a minor victory; otherwise a draw. confidence: wahapedia-GHB-only.",
+      "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+    }
+  ],
+  "ghb_2026_27": {
+    "battle_tactic_card_system": "Pick up to 2 battle tactics cards at army composition and write them on your roster; tell your opponent before deployment. 6 cards: 1 Blazing Onslaught, 2 Siege of Ashes, 3 Flanking Firestorm, 4 Smokescreen, 5 Burning for Vengeance, 6 Legend of the Parch. Each card has 3 tiers in fixed order: Affray -> Strike -> Domination; you must complete the earlier tier on that card before you can complete the next. No per-turn picking: at the end of each of YOUR turns you can complete 1 tactic per card (max 2 per turn), and if you meet the conditions you MUST complete it. Every tactic on every card is worth 5 VP (all 18 show 5 VP on the wahapedia GHB page; WarCom shows Master of Arms = 5 VP), so the maximum is 30 VP from tactics. Each tactic is completed once (no reuse unless the card says so). If you seize the initiative you can't complete tactics that turn. Some cards have set-up picks after Deployment Phase abilities and before choosing first turn (hideout, fugitive). Completed tactics break VP ties.",
+    "underdog": "Core: the player with the fewest VP at the start of the battle round; if tied, no underdog (Oct 2026 glossary erratum). The underdog gets +1 CP that round. GHB 2026-27 Seizing the Initiative: if the player who went second wins priority and goes first (unless the opponent leads by 11+ VP), the opponent counts as the underdog until they seize the initiative themselves, overriding the VP comparison (wahapedia-GHB-only). No underdog during the deployment phase (FAQ). Several 2026-27 battleplan twists give the underdog abilities.",
+    "scoring_overview": "5 battle rounds. Primary VP is scored by the active player at the end of each of their turns, per battleplan; a typical pattern is 3 VP for 1+ objectives, 3 VP for 2+ (or for a pair), 4 VP for more than your opponent (variants per plan). Battle tactics are 5 VP each, max 2 per turn, 6 tactics total. Major win at 5+ VP margin. Primary pattern and margin: wahapedia-GHB-only.",
+    "other_season_rules": [
+      "Season Rules 2026-27 (both players): fury level (0-7) and rage dice. Raising the Heat (deployment: attacker fury 1, defender 2); Simmering Rage (start of each battle round, mandatory: gain rage dice = fury; lost at end of round); Eruption of Fury (once per turn (army), end of any turn: spend up to 3 rage dice for extra no-crit attacks; 6s deal D3 mortal damage to each enemy unit in combat and raise the opponent's fury +1; 1s deal D3 unwardable mortal damage to yourself); Fight Through the Pain (passive: spend rage dice, -1 fury each, 3+ removes a damage point).",
+      "Terrain 2026-27: Activate Place of Power is once per turn (army), start of any turn, with options Ignite Fury, Channel Wrath and Dizzying Rage (1 = D3 mortal damage to the Hero). Obscuring is now 'every model within 1\"' -> only visible to enemies within its combat range, and its own ranged weapons have half range; only Obscuring Terrain has it (WarCom: Area Terrain and Places of Power lost obscuring). Faction terrain: affected by all enemy abilities like a unit, 'demolished' rather than destroyed (doesn't count for battle tactics), can be charged only when garrisoned, can't contest objectives.",
+      "Magic 2026-27: separate casting and chanting power levels; Banish Manifestation replaces a spell or prayer, can't target a manifestation summoned this turn, once per manifestation per turn, +1 per extra enemy manifestation; manifestations don't count as units for battle tactics, can only use CORE and own-warscroll abilities and aren't affected by other friendly abilities; Severed Connection triggers when the summoning UNIT is destroyed.",
+      "Commands 2026-27: All-out Attack gives -1 save for the rest of the turn; All-out Defence lasts until that attack resolves; Counter-charge 2 CP; Magical Intervention allows BANISH; Covering Fire can't target manifestations or faction terrain.",
+      "Army Composition 2026-27: auxiliary surcharge +20 pts cumulative per auxiliary after the first; fewer-auxiliaries player gets +1 CP every round; Regimented Forces priority re-roll; general's regiment up to 4 non-Hero units; Heroes joining another Hero's regiment take the place of a non-Hero unit (FAQ).",
+      "Aqshian objectives: 6 named 40mm markers, each with a 3\" control zone; 'pairs' for scoring (wahapedia-GHB-only).",
+      "Scourge of Aqshy: optional seasonal warscrolls (all copies of a unit must use the same version), battle formations, artefact and heroic trait tables (instead of the normal ones), and spell and prayer lores, per faction. Not usable in Regiments of Renown; Scourge enhancements, lores and formations not usable in Armies of Renown (FAQ in the Oct 2026 PDF), though Scourge units are allowed in an AoR (wahapedia FAQ). SOURCES DIFFER only in scope: units vs enhancements.",
+      "Aqshian Crusades: linked-battleplan formats (3 / 5 / 12 games) for events and campaigns; doesn't change the turn sequence."
+    ],
+    "source": "https://wahapedia.ru/aos4/the-rules/general-s-handbook-2026-27/"
+  },
+  "battlescroll_changes_to_core": [
+    {
+      "change": "Re-roll addendum (2.2): you can't re-roll a dice more than once; re-rolls happen before modifiers.",
+      "date": "In Rules Updates Oct 2026 (exact original date NOT FOUND)",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Reactions (5.2 step 2): starting with the player using the ability, players alternate using reactions or passing; once both pass consecutively, the window closes.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Visibility (6.0): range and visibility requirements must both be met by the same model in the target.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Combat range (7.0): a model is in combat with an enemy unit if that unit is within the model's combat range and visible to it.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Deploy Regiment (10.1): you can't set up units outside that regiment on the battlefield OR in reserve during it.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Fight (14.4): pile-in reference corrected to 15.3.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "New 15.5 Overhanging Models.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Charge moves (15.6): definition of finishing or ending a charge move.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Slain models (18.3): remove the fewest models possible to restore coherency.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Strike-first (19.0): the check happens 'after any non-Fight combat phase abilities have been used' instead of 'at the start of the phase'. Strike-last glossary: removed 'alternate ... starting with the active player'; the alternating fight order carries on (FAQ).",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Companion weapon ability (20.0) reworded: not affected by friendly abilities modifying hit or wound rolls or weapon characteristics, except negative modifiers.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Returning models (22.0): set up within coherency range; units of 7+ need 2 non-returned models in range.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Replacement units (24.2): count as reinforced if the original was reinforced and the replacement has more than half the original's models.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Guarded Hero (25.0): the 12\" restriction is measured from attacking MODELS, not units.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Modifier order (27.0): fixed-value roll replacements are chosen before rolling. Glossary: characteristics can't go below 1 except Rend (0).",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Order of effects (30.0): simultaneous delayed effects are resolved by the active player first, then the opponent.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Contesting objectives (32.1): each unit counts toward 1 objective for control; the active player assigns multi-contesting units first. 32.2: control is checked in the deployment phase after Deployment Phase abilities (replacing 'start of first battle round') and at the end of each turn. 32.3: a unit can contest 1 objective and 1 terrain feature for control.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Glossary: Underdog = fewest VP; if tied, no underdog that round. Counter-charge = Command, 2 CP. Champion = +1 Attacks. New definitions: drops, fought, removed from play, used (an ability is used once declared).",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Manifestations (Advanced Rules Magic 7.0 and 7.2): can't re-summon a manifestation removed from play the same turn; Banish gets +1 per additional enemy manifestation after the first.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Faction terrain (Terrain 1.5): can use Fight and Shoot if it has weapons; Move '-' terrain can't move (including pile-in); terrain with a Move characteristic counts as a unit for movement and combat; rules for units placed on terrain.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Regiments of Renown: max 1 unless noted; can't use the host faction's rules unless they share the faction keyword; replacement units stay in the RoR.",
+      "date": "In Rules Updates Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Counter-charge raised from 1 CP to 2 CP (already 2 CP in the April 2025 core PDF; carried into Commands 2026-27).",
+      "date": "By the April 2025 core rules revision (2 Apr 2025); exact battlescroll date NOT FOUND",
+      "source": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf"
+    },
+    {
+      "change": "GHB 2025-26 era changes carried into the 2026-27 modules: All-out Attack -1 save for the rest of the turn; Covering Fire can't target manifestations or faction terrain (timing restored to Enemy Shooting Phase by erratum); Unbind keyword fixed; split casting and chanting power levels; Sacred Rites prayer; auxiliary surcharge; Regimented Forces; new Obscuring definition and 'behind terrain' measured base to base.",
+      "date": "GHB 2025-26 (mid-2025) plus errata to Oct 2026",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "GHB 2026-27 module changes: Activate Place of Power reworked (Ignite Fury / Channel Wrath / Dizzying Rage, once per turn (army)); Magical Intervention can Banish; All-out Defence limited to that attack; Banish can't target a manifestation summoned this turn; faction terrain can only be charged when garrisoned and can't contest objectives; manifestations and faction terrain don't count for battle tactics; Severed Connection on the summoner unit's destruction.",
+      "date": "GHB 2026-27 release (pre-order 20 Jun, release 4 Jul 2026)",
+      "source": "https://wahapedia.ru/aos4/the-rules/the-core-rules/"
+    },
+    {
+      "change": "GHB 2026-27 errata: auxiliary-unit surcharge added to Army Composition 2026-27 3.6; Ambuscade uses non-Faction-Terrain features; Hidden Under Ash-clouds wording; FAQs on Eruption of Fury, Fight Through the Pain, manifestations and faction terrain.",
+      "date": "Rules Updates Oct 2026 (may have first appeared earlier; NOT FOUND)",
+      "source": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf"
+    },
+    {
+      "change": "Sept 2026 quarterly Battlescroll and Oct 2026 update: faction and battle-profile balance (Heroes joining regiments, reinforcement limits, Champion doubling on some units). No changes to the core turn sequence or to universal commands found.",
+      "date": "23 Sep 2026 / 28 Oct 2026",
+      "source": "https://www.warhammer-community.com/en-gb/articles/iix3g22a/warhammer-age-of-sigmar-october-update/"
+    }
+  ],
+  "disagreements_and_gaps": [
+    "Wahapedia GHB page stated date (June 2026) predates the latest Rules Update (Oct 2026), so it fails your rule; GHB-only facts drawn from it are tagged. Its content does show the Oct 2026 GHB errata inline.",
+    "Reveal timing for battle tactics cards: 'Before deployment' (Battle Tactics 2026-27) vs 'At the start of the battle' (battlepack text).",
+    "All-out Defence duration: core book 2025 'in this phase' vs Commands 2026-27 'until that ATTACK ability has been resolved'. Use 2026-27 for matched play.",
+    "All-out Attack: core book has no save penalty; 2026-27 (and 2025-26) adds -1 save for the rest of the turn.",
+    "Power level: core book counts SPELL+PRAYER+BANISH together; Magic 2026-27 has separate casting and chanting power levels, with Banish replacing a spell or prayer.",
+    "Eruption of Fury reach: the Threshold Tactics prose implies 'within 3\"', but the rule text says each enemy unit 'in combat with' the attacker. Use the rule text.",
+    "Scourge of Aqshy and Armies of Renown: Oct 2026 FAQ says Scourge enhancements, lores and formations can't be used in an AoR; the wahapedia FAQ says Scourge UNITS (warscrolls) can be. These don't contradict, but be careful in the app.",
+    "NOT FOUND: the exact sub-step order of battle-tactic scoring vs primary scoring within End of Turn.",
+    "NOT FOUND: whether Fight Through the Pain is applied before or after ward rolls (wording 'before allocating damage' suggests after wards).",
+    "NOT FOUND: a 2026-27 GHB official PDF or WarCom text for 'Seizing the Initiative' (11 VP threshold); wahapedia only."
+  ]
+}

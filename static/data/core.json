@@ -1,0 +1,373 @@
+{
+ "overview": [
+  "A battle is 5 rounds. Each round both players take a turn: Start of Turn, Hero, Movement, Shooting, Charge, Combat, End of Turn.",
+  "In every phase the player whose turn it is uses their abilities first, then their opponent. Reactions alternate, starting with whoever used the ability.",
+  "Rules of One: max 1 CORE ability and 1 command per unit per phase; each command once per phase per army; an ability can't affect the same unit twice at once.",
+  "Victory: 5+ VP ahead is a major win; less than 5 a minor win; VP tied, the player with more battle tactics wins a minor victory."
+ ],
+ "pregame": [
+  "Rosters swapped. Note CP bonuses: <b>+1 CP every round</b> for whoever has fewer auxiliary units; <b>+1 CP in round 1</b> if your army is 50+ pts under the limit.",
+  "Battleplan: one player rolls for the table (1-3 table 1, 4-6 table 2), the other rolls for the plan on it, or just agree one. Pick it above to see the map.",
+  "Roll off: the winner chooses <b>attacker</b> or <b>defender</b>.",
+  "Defender sets up the objectives as the map shows (each scores within 3\" of the 40mm marker).",
+  "Defender sets up terrain (map layout, or each piece 3\"+ from edges and objectives, 6\"+ from other terrain).",
+  "Attacker picks their territory.",
+  "Tell your opponent your 2 battle tactic cards (and theirs to you).",
+  "The battle lasts <b>5 battle rounds</b>."
+ ],
+ "deployment": [
+  "Faction terrain first: the attacker uses Deploy Faction Terrain, then the defender (optional). Wholly within your territory, 3\"+ from objectives and other terrain.",
+  "Alternate drops, attacker first: <b>Deploy Regiment</b> places a whole regiment as one drop; units wholly within your territory and more than 9\" from enemy territory. Reserves are set up with their own Deploy abilities.",
+  "Whoever <b>finishes deploying first</b> will choose who takes the first turn in round 1.",
+  "Then other Deployment Phase abilities (the player who began deployment first). Season rule <b>Raising the Heat</b>: attacker sets fury to 1, defender to 2 (set the Fury tracker).",
+  "Objective control is checked now, once all Deployment Phase abilities are done (Oct 2026 change).",
+  "Battle tactic card picks (e.g. Blazing Onslaught hideout, Burning for Vengeance fugitive) happen after deployment abilities, before choosing the first turn.",
+  "No underdog during deployment."
+ ],
+ "roundStart": [
+  "<b>Priority:</b> round 1, whoever finished deploying first chooses. From round 2, roll off; the winner chooses. Tie: whoever went first last round chooses. (Regimented Forces: a player with more regiments can re-roll priority once per battle.)",
+  "<b>Seizing the initiative:</b> if the player who went second last round goes first now (two turns in a row), they can't complete battle tactics that turn, and their opponent counts as underdog until they seize it back. Not possible if the opponent leads by 11+ VP.",
+  "<b>Underdog:</b> the player with fewest VP (tied = no underdog).",
+  "<b>Command points:</b> 4 each, +1 underdog, +1 for fewer auxiliary units, +1 round 1 underspend. Set the CP tracker. Unspent CP are lost at the end of the round.",
+  "<b>Simmering Rage</b> (mandatory): gain rage dice equal to your fury level. Unspent rage dice are lost at the end of the round.",
+  "Start of Battle Round abilities: the player taking the first turn uses theirs first, then the opponent.",
+  "<b>Round 4 only:</b> units still in reserve (set up by a Deploy ability) are destroyed."
+ ],
+ "phases": [
+  {
+   "id": "start-of-turn",
+   "name": "Start of turn",
+   "steps": [
+    "Your Start of Turn abilities first, then your opponent's.",
+    "Activate Place of Power (once per turn, either player): a Hero within 3\" of a Place of Power rolls a D6; on 1 it takes D3 mortal damage, on 2+ pick Ignite Fury, Channel Wrath or Dizzying Rage.",
+    "Remind yourself which battle tactic tier is next on each card (below)."
+   ],
+   "oppSteps": [
+    "They use Start of Turn abilities first, then you can use yours (Start of Any Turn / Enemy Turn)."
+   ]
+  },
+  {
+   "id": "hero",
+   "name": "Hero phase",
+   "steps": [
+    "Cast spells: 2D6 casting roll must equal or beat the casting value. Unmodified double 1 = miscast (D3 mortal damage, no more spells this phase). Each Wizard casts as many spells as its power level, each spell once per turn across the army (unless Unlimited).",
+    "Chant prayers: D6 chanting roll. Unmodified 1 fails and loses D3 ritual points. Otherwise bank the roll as ritual points, or add banked points to beat the chanting value.",
+    "Summon manifestations with their spells/prayers. Banish an enemy manifestation instead of a spell or prayer (2D6 vs banishment, within 30\").",
+    "Rally (1 CP) a unit not in combat: 6 dice, each 4+ = 1 point; heal 1 per point, or return a slain model for points equal to its Health.",
+    "Other Your/Any Hero Phase abilities, then your opponent uses theirs (e.g. Rally, Magical Intervention)."
+   ],
+   "oppSteps": [
+    "Watch their casting rolls: a Wizard within 30\" can <b>Unbind</b> (2D6 must beat the casting roll).",
+    "After they finish, you can use Any/Enemy Hero Phase abilities: <b>Rally</b> (1 CP), <b>Magical Intervention</b> (1 CP: cast, chant or banish at -1)."
+   ]
+  },
+  {
+   "id": "movement",
+   "name": "Movement phase",
+   "steps": [
+    "One unit at a time: <b>Normal Move</b> (not in combat, up to Move, can't enter combat), <b>Run</b> (Move + D6; At the Double 1 CP = +6\" instead of rolling), or <b>Retreat</b> (in combat: take D3 mortal damage, move, can't end in combat).",
+    "Units that Ran or Retreated can't Shoot or Charge this turn.",
+    "End every move in coherency (1/2\"; units of 7+ models each within 1/2\" of two others). Combat range is 3\".",
+    "Then your opponent can use Enemy Movement abilities (e.g. Redeploy)."
+   ],
+   "oppSteps": [
+    "After they move: <b>Redeploy</b> (1 CP) one of your units not in combat D6\", not into or through combat range."
+   ]
+  },
+  {
+   "id": "shooting",
+   "name": "Shooting phase",
+   "steps": [
+    "Pick each unit that didn't Run or Retreat; declare all targets, then roll. In combat, only Shoot in Combat weapons, and only at units it is in combat with.",
+    "Hit, wound, save (minus rend), then ward, then allocate damage. Modifiers to hit/wound cap at +1/-1; save bonuses cap at +1.",
+    "Guarded Hero (-1 to hit; Infantry heroes can't be shot from 12\"+), Cover (-1 to hit) and Obscuring terrain apply.",
+    "All-out Attack (1 CP, +1 to hit, -1 save rest of turn). Your opponent may then use Covering Fire."
+   ],
+   "oppSteps": [
+    "When they target you: <b>All-out Defence</b> (1 CP, +1 save for that attack).",
+    "After they finish: <b>Covering Fire</b> (1 CP) with a unit that didn't Run and isn't in combat, at the closest valid enemy, -1 to hit."
+   ]
+  },
+  {
+   "id": "charge",
+   "name": "Charge phase",
+   "steps": [
+    "Pick units not in combat that didn't Run or Retreat: roll 2D6, move up to that and end within 1/2\" of a visible enemy unit.",
+    "Forward to Victory (1 CP): re-roll the charge roll.",
+    "Your opponent may then Counter-charge."
+   ],
+   "oppSteps": [
+    "After their charges: <b>Counter-charge</b> (2 CP) with one of your units not in combat."
+   ]
+  },
+  {
+   "id": "combat",
+   "name": "Combat phase",
+   "steps": [
+    "1. Combat abilities that aren't Fight abilities: yours first, then your opponent's.",
+    "2. Strike-first units fight first (alternating, you first). Check strike-first <b>after</b> step 1 (Oct 2026).",
+    "3. Alternate picking units to Fight, starting with you: pile in 3\", then attack with all melee weapons. Every unit in combat must fight; units that charged can fight even if no longer in combat.",
+    "4. Strike-last units go after everyone else; the alternation carries on into them.",
+    "Reactions: All-out Attack (you) and All-out Defence (defender), 1 CP each. Fight Through the Pain: spend rage dice before damage is allocated (3+ removes 1 damage, fury -1 each)."
+   ],
+   "oppSteps": [
+    "Same sequence; they pick first, then you alternate. Use All-out Defence / All-out Attack (1 CP) and Fight Through the Pain as needed."
+   ]
+  },
+  {
+   "id": "end-of-turn",
+   "name": "End of turn",
+   "steps": [
+    "End of turn abilities: yours first, then your opponent's. <b>Power Through</b> (1 CP, a unit that charged: D3 mortal damage to a lower-Health enemy in combat, then move). <b>Eruption of Fury</b> (once per turn: spend up to 3 rage dice for extra attacks; 6s deal D3 mortal damage to each enemy in combat and raise the opponent's fury, 1s hurt you).",
+    "Check control of every objective (each unit counts towards one objective only).",
+    "<b>Score VP</b> for the battleplan (only the player whose turn it is scores).",
+    "<b>Battle tactics:</b> complete at most 1 tactic per card (Affray, then Strike, then Domination), 5 VP each. You must complete it if you meet the conditions. None if you seized the initiative this turn.",
+    "After the second turn of the round: End of Battle Round abilities, CP reset to 0, unspent rage dice lost."
+   ],
+   "oppSteps": [
+    "You can use End of Any Turn abilities after them: Power Through, Eruption of Fury.",
+    "Objective control is checked; they score VP and battle tactics (you don't score in their turn).",
+    "If this was the second turn: End of Battle Round abilities, CP reset to 0, rage dice lost."
+   ]
+  }
+ ],
+ "tacticsHowTo": "GHB 2026-27: you pick 2 of the 6 cards when you write your list. Each card has Affray, then Strike, then Domination, in that order, 5 VP each. At the end of each of your turns you complete at most 1 tactic per card (so up to 2), and you must complete one if you meet its conditions. Seizing the initiative stops you completing tactics that turn.",
+ "extraAbilities": [
+  {
+   "name": "Normal Move",
+   "timing": "Your Movement Phase",
+   "kind": "active",
+   "who": "your",
+   "when": "movement",
+   "keywords": [
+    "CORE",
+    "MOVE"
+   ],
+   "declare": "Pick a friendly unit that is not in combat.",
+   "effect": "Move up to its Move characteristic; it can't move into combat at any point.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Run",
+   "timing": "Your Movement Phase",
+   "kind": "active",
+   "who": "your",
+   "when": "movement",
+   "keywords": [
+    "CORE",
+    "MOVE",
+    "RUN"
+   ],
+   "declare": "Pick a friendly unit that is not in combat.",
+   "effect": "Roll D6 (the run roll); move up to Move + roll; can't move into combat. It can't Shoot or Charge later that turn (those abilities require no Run or Retreat).",
+   "section": "Core rules"
+  },
+  {
+   "name": "Retreat",
+   "timing": "Your Movement Phase",
+   "kind": "active",
+   "who": "your",
+   "when": "movement",
+   "keywords": [
+    "CORE",
+    "MOVE",
+    "RETREAT"
+   ],
+   "declare": "Pick a friendly unit that is in combat.",
+   "effect": "Inflict D3 mortal damage on it; it moves up to its Move, can pass through enemy combat ranges but can't end in one. It can't Shoot or Charge that turn.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Shoot",
+   "timing": "Your Shooting Phase",
+   "kind": "active",
+   "who": "your",
+   "when": "shooting",
+   "keywords": [
+    "CORE",
+    "ATTACK",
+    "SHOOT"
+   ],
+   "declare": "Pick a friendly unit that has not used Run or Retreat this turn, then pick one or more enemy targets for its attacks.",
+   "effect": "Resolve shooting attacks against the target(s).",
+   "section": "Core rules"
+  },
+  {
+   "name": "Charge",
+   "timing": "Your Charge Phase",
+   "kind": "active",
+   "who": "your",
+   "when": "charge",
+   "keywords": [
+    "CORE",
+    "MOVE",
+    "CHARGE"
+   ],
+   "declare": "Pick a friendly unit not in combat that has not used Run or Retreat this turn, then roll 2D6 (the charge roll).",
+   "effect": "Move up to the charge roll; may pass through enemy combat ranges; must end within 1/2\" of a visible enemy unit (or an enemy manifestation, or a garrisoned enemy faction terrain feature). If it does, it has charged.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Fight",
+   "timing": "Any Combat Phase (in the alternating fight sequence)",
+   "kind": "active",
+   "who": "any",
+   "when": "combat",
+   "keywords": [
+    "CORE",
+    "ATTACK",
+    "FIGHT"
+   ],
+   "declare": "Pick a friendly unit in combat or that charged this turn. It may pile in (3\"). Then, if in combat, pick one or more enemy units it is in combat with as targets.",
+   "effect": "Resolve combat attacks against the target(s).",
+   "section": "Core rules"
+  },
+  {
+   "name": "Pile-in move",
+   "timing": "Declare step of Fight (and other abilities that allow it)",
+   "kind": "passive",
+   "who": "neutral",
+   "when": "always",
+   "keywords": [],
+   "declare": "If in combat, pick an enemy unit in combat with you as the pile-in target.",
+   "effect": "Each model moves up to 3\". In combat: must end no further from the target and stay in combat with every unit it was already in combat with; can pass through enemy combat ranges. Not in combat: 3\" in any direction, may end in combat.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Deploy Regiment",
+   "timing": "Deployment Phase",
+   "kind": "active",
+   "who": "any",
+   "when": "deployment",
+   "keywords": [
+    "DEPLOY"
+   ],
+   "declare": "Pick a regiment on your roster with no units yet deployed.",
+   "effect": "Keep using Deploy abilities without alternating until all its units are deployed; you can't set up units from outside it, on the battlefield or in reserve, during those abilities (Oct 2026 wording).",
+   "section": "Core rules"
+  },
+  {
+   "name": "Deploy Unit",
+   "timing": "Deployment Phase",
+   "kind": "active",
+   "who": "any",
+   "when": "deployment",
+   "keywords": [
+    "DEPLOY"
+   ],
+   "declare": "Pick an undeployed unit on your roster.",
+   "effect": "Set it up wholly within friendly territory and more than 9\" from enemy territory.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Deploy Faction Terrain",
+   "timing": "Deployment Phase (step 1; player who begins deployment first)",
+   "kind": "active",
+   "who": "any",
+   "when": "deployment",
+   "keywords": [
+    "DEPLOY TERRAIN"
+   ],
+   "declare": "Pick an undeployed friendly faction terrain feature.",
+   "effect": "Set it up wholly within friendly territory, more than 3\" from all objectives and other terrain features. Optional.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Banish Manifestation",
+   "timing": "Your Hero Phase (or the Enemy Hero Phase via Magical Intervention)",
+   "kind": "active",
+   "who": "your",
+   "when": "hero",
+   "keywords": [
+    "BANISH"
+   ],
+   "declare": "Instead of a Spell or Prayer, pick a friendly Wizard or Priest and a manifestation within 30\" that was not summoned this turn; roll 2D6 +1 per additional enemy manifestation on the battlefield after the first. You can't target the same manifestation more than once per turn.",
+   "effect": "If the roll equals or beats its banishment value, it is banished and removed from play.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Activate Place of Power",
+   "timing": "Once Per Turn (Army), Start of Any Turn",
+   "kind": "active",
+   "who": "any",
+   "when": "start-of-turn",
+   "keywords": [
+    "CORE"
+   ],
+   "declare": "Pick a friendly Hero within 3\" of any Place of Power.",
+   "effect": "Roll a D6: on a 1 the Hero takes D3 mortal damage. On a 2+ pick one: Ignite Fury (gain 2 rage dice and raise your fury level by 2, max 7); Channel Wrath (a Wizard or Priest gets +1 to casting or chanting rolls for the rest of the turn); Dizzying Rage (a non-Wizard, non-Priest Hero can Unbind or Banish as if Wizard (1) for the rest of the turn). Because it is a CORE ability, the Hero can't use another CORE ability that phase.",
+   "section": "Core rules",
+   "usage": "1/turn (army)"
+  },
+  {
+   "name": "Regimented Forces",
+   "timing": "Once per battle, at the priority roll",
+   "kind": "active",
+   "who": "any",
+   "when": "battle-round-start",
+   "keywords": [
+    "Army Composition 2026-27"
+   ],
+   "declare": "Only if you had more regiments than your opponent at the start of the battle.",
+   "effect": "Re-roll your priority roll after seeing both rolls, before priority is decided.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Ward Save",
+   "timing": "Passive (damage sequence step 1)",
+   "kind": "passive",
+   "who": "neutral",
+   "when": "always",
+   "keywords": [
+    "WARD (X+)"
+   ],
+   "declare": "",
+   "effect": "Roll D6 per damage point in the pool; on >= ward value remove it. Only the best ward applies.",
+   "section": "Core rules"
+  },
+  {
+   "name": "Fly",
+   "timing": "Passive",
+   "kind": "passive",
+   "who": "neutral",
+   "when": "always",
+   "keywords": [
+    "FLY"
+   ],
+   "declare": "",
+   "effect": "While moving, ignore models, terrain, enemy combat ranges and vertical distance; can't end in combat unless the move ability allows it.",
+   "section": "Core rules"
+  }
+ ],
+ "sources": [
+  {
+   "url": "https://assets.warhammer-community.com/eng_aos_core%26key_the-rules_apr25-t7q3fbv0zb-bit50crc5k.pdf",
+   "what": "Core Rules (Apr 2025)"
+  },
+  {
+   "url": "https://assets.warhammer-community.com/eng_28-10_aos_core_rules_and_key_downloads_rules_updates-aghvsvstmk-u8wyh173fe.pdf",
+   "what": "Rules Updates (Oct 2026)"
+  },
+  {
+   "url": "https://www.warhammer-community.com/en-gb/articles/yb8viq2m/head-to-aqshy-with-the-new-generals-handbook/",
+   "what": "GHB 2026-27 (WarCom)"
+  },
+  {
+   "url": "https://wahapedia.ru/aos4/the-rules/the-core-rules/",
+   "what": "Wahapedia core rules (updated for Oct 2026)"
+  }
+ ],
+ "compiled": "2026-11-10",
+ "caveats": [
+  "Wahapedia GHB page stated date (June 2026) predates the latest Rules Update (Oct 2026), so it fails your rule; GHB-only facts drawn from it are tagged. Its content does show the Oct 2026 GHB errata inline.",
+  "Reveal timing for battle tactics cards: 'Before deployment' (Battle Tactics 2026-27) vs 'At the start of the battle' (battlepack text).",
+  "All-out Defence duration: core book 2025 'in this phase' vs Commands 2026-27 'until that ATTACK ability has been resolved'. Use 2026-27 for matched play.",
+  "All-out Attack: core book has no save penalty; 2026-27 (and 2025-26) adds -1 save for the rest of the turn.",
+  "Power level: core book counts SPELL+PRAYER+BANISH together; Magic 2026-27 has separate casting and chanting power levels, with Banish replacing a spell or prayer.",
+  "Eruption of Fury reach: the Threshold Tactics prose implies 'within 3\"', but the rule text says each enemy unit 'in combat with' the attacker. Use the rule text.",
+  "Scourge of Aqshy and Armies of Renown: Oct 2026 FAQ says Scourge enhancements, lores and formations can't be used in an AoR; the wahapedia FAQ says Scourge UNITS (warscrolls) can be. These don't contradict, but be careful in the app.",
+  "NOT FOUND: the exact sub-step order of battle-tactic scoring vs primary scoring within End of Turn.",
+  "NOT FOUND: whether Fight Through the Pain is applied before or after ward rolls (wording 'before allocating damage' suggests after wards).",
+  "NOT FOUND: a 2026-27 GHB official PDF or WarCom text for 'Seizing the Initiative' (11 VP threshold); wahapedia only."
+ ]
+}

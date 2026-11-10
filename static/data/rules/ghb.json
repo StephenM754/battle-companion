@@ -1,0 +1,2587 @@
+{
+ "season": "General's Handbook 2026-27",
+ "tactics": [
+  {
+   "name": "Blazing Onslaught",
+   "card": "At the start of the battle, after using all Deployment Phase abilities but before determining which player will take the first turn, your opponent must pick 1 non-Faction Terrain terrain feature within their territory to be their hideout. The hideout cannot be removed from the battlefield at any point during the battle.",
+   "tiers": [
+    {
+     "tier": "Affray",
+     "name": "Master of Arms",
+     "text": "You complete this battle tactic at the end of your turn if the same enemy unit had at least 1 damage point allocated to it in 3 different phases this turn."
+    },
+    {
+     "tier": "Strike",
+     "name": "Break Their Defences",
+     "text": "You complete this battle tactic at the end of your turn if you control the enemy hideout."
+    },
+    {
+     "tier": "Domination",
+     "name": "No Survivors",
+     "text": "You complete this battle tactic at the end of your turn if 2 or more enemy units were destroyed this turn and you control the enemy hideout."
+    }
+   ]
+  },
+  {
+   "name": "Siege of Ashes",
+   "card": "",
+   "tiers": [
+    {
+     "tier": "Affray",
+     "name": "Form a Wall",
+     "text": "You complete this battle tactic at the end of your turn if 2 or more friendly units are wholly outside friendly territory, wholly within 6\" of friendly territory and within 3\" of each other."
+    },
+    {
+     "tier": "Strike",
+     "name": "Outpost Territory",
+     "text": "You complete this battle tactic at the end of your turn if you control an objective within enemy territory and that objective is contested by:\n\u2022 At least 1 friendly unit that did not use a Move ability this turn\n\u2022 At least 1 other friendly unit that charged this turn."
+    },
+    {
+     "tier": "Domination",
+     "name": "Repel the Attackers",
+     "text": "You complete this battle tactic at the end of your turn if there are 3 or more friendly units within 3\" of the centre of the battlefield that are not in combat."
+    }
+   ]
+  },
+  {
+   "name": "Burning for Vengeance",
+   "card": "At the start of the battle, after using all Deployment Phase abilities but before determining which player will take the first turn, pick an enemy Hero on the battlefield or in reserve to be the fugitive for the rest of the battle.",
+   "tiers": [
+    {
+     "tier": "Affray",
+     "name": "Search Every Inch",
+     "text": "You complete this battle tactic at the end of your turn if there is a different friendly unit wholly within each large quarter of the battlefield, those friendly units are more than 9\" from the centre of the battlefield, and no more than 1 of those friendly units was set up this turn."
+    },
+    {
+     "tier": "Strike",
+     "name": "Quick Pursuit",
+     "text": "You complete this battle tactic at the end of your turn if 1 of the following is true:\n\u2022 There are 3 or more friendly units that are not in combat and are within 12\" of the enemy fugitive.\n\u2022 There is no enemy fugitive on the battlefield."
+    },
+    {
+     "tier": "Domination",
+     "name": "Bring Them In",
+     "text": "You complete this battle tactic at the end of your turn if 1 of the following is true:\n\u2022 There are 3 or more friendly units in combat with the enemy fugitive.\n\u2022 There is no enemy fugitive on the battlefield and 3 or more friendly units are contesting the same objective that is wholly outside friendly territory."
+    }
+   ]
+  },
+  {
+   "name": "Legend of the Parch",
+   "card": "",
+   "tiers": [
+    {
+     "tier": "Affray",
+     "name": "Daring Rescue",
+     "text": "You complete this battle tactic at the end of your turn if an enemy unit that was in combat at the start of the turn was destroyed by a combat attack made by a friendly unit that charged this turn."
+    },
+    {
+     "tier": "Strike",
+     "name": "Command from the Front",
+     "text": "You complete this battle tactic at the end of your turn if there are 2 or more friendly Heroes on the battlefield, all friendly Heroes are within 9\" of a visible enemy unit and no friendly Heroes were slain this turn."
+    },
+    {
+     "tier": "Domination",
+     "name": "Hero of Legend",
+     "text": "You complete this battle tactic at the end of your turn if you control an objective wholly outside your territory that you did not control at the start of the turn and a friendly Hero is contesting that objective."
+    }
+   ]
+  },
+  {
+   "name": "Flanking Firestorm",
+   "card": "",
+   "tiers": [
+    {
+     "tier": "Affray",
+     "name": "Ambuscade",
+     "text": "You complete this battle tactic at the end of your turn if 2 or more objectives or non-Faction Terrain terrain features that you control, in any combination, are each contested by a different friendly unit that is more than 6\" from friendly territory and was not set up this turn."
+    },
+    {
+     "tier": "Strike",
+     "name": "Surround the Enemy",
+     "text": "You complete this battle tactic at the end of your turn if 2 or more friendly units that were not set up this turn are each within 9\" of a different corner of the battlefield and wholly outside friendly territory."
+    },
+    {
+     "tier": "Domination",
+     "name": "Claim What's Yours",
+     "text": "You complete this battle tactic at the end of your turn if there are more friendly units within enemy territory than enemy units and there is at least 1 friendly Hero wholly within enemy territory."
+    }
+   ]
+  },
+  {
+   "name": "Smokescreen",
+   "card": "",
+   "tiers": [
+    {
+     "tier": "Affray",
+     "name": "Keep the Enemy Close",
+     "text": "You complete this battle tactic at the end of your turn if you control an objective that is contested by at least 1 enemy unit."
+    },
+    {
+     "tier": "Strike",
+     "name": "Feign Weakness",
+     "text": "You complete this battle tactic at the end of your turn if more friendly units were destroyed this turn than enemy units."
+    },
+    {
+     "tier": "Domination",
+     "name": "Execute the Plan",
+     "text": "You complete this battle tactic at the end of your turn if you control each objective within enemy territory."
+    }
+   ]
+  }
+ ],
+ "seasonRules": [
+  {
+   "name": "SIMMERING RAGE",
+   "timing": "Once Per Turn (Army), Start of Battle Round",
+   "kind": "active",
+   "who": "neutral",
+   "when": "battle-round-start",
+   "usage": "1/turn (army)",
+   "declare": "You must use this ability.",
+   "effect": "Gain a number of rage dice equal to your fury level. At the end of the battle round, any unspent rage dice are lost."
+  },
+  {
+   "name": "RAISING THE HEAT",
+   "timing": "Once Per Battle (Army), Deployment Phase",
+   "kind": "active",
+   "who": "neutral",
+   "when": "deployment",
+   "usage": "1/battle (army)",
+   "effect": "If you are the attacker, set your fury level to 1. If you are the defender, set your fury level to 2."
+  },
+  {
+   "name": "ERUPTION OF FURY",
+   "timing": "Once Per Turn (Army), End of Any Turn",
+   "kind": "active",
+   "who": "any",
+   "when": "end-of-turn",
+   "usage": "1/turn (army)",
+   "keywords": [
+    "ATTACK",
+    "FIGHT"
+   ],
+   "declare": "Pick a friendly unit to use this ability, then pick an enemy unit in combat with that friendly unit to be the target.",
+   "effect": "Pick 1 of the melee weapons that the unit using this ability is armed with. Then, spend up to 3 rage dice.\nResolve a number of combat attacks against the target using the melee weapon you picked equal to the number of rage dice you spent.\nThose attacks cannot score critical hits. Instead, for each unmodified hit roll of 6 for those attacks:\nInflict an additional D3 mortal damage on each enemy unit in combat with the unit using this ability.\nYour opponent must increase their fury level by 1, to a maximum of 7.\nFor each unmodified hit roll of 1 for those attacks, allocate D3 mortal damage to this unit after the damage sequence has been resolved (ward rolls cannot be made for those damage points).\nDesigner\u2019s Note: Rage dice do not add to the Attacks characteristic of the weapon you pick; if you spend 3 rage dice to use this ability, you only make 3 combat attacks."
+  },
+  {
+   "name": "FIGHT THROUGH THE PAIN",
+   "timing": "Passive",
+   "kind": "passive",
+   "who": "neutral",
+   "when": "always",
+   "effect": "Before allocating damage to a friendly unit, you can spend any number of rage dice. For each rage dice spent, reduce your fury level by 1, to a minimum of 0, then roll a dice. On a 3+, remove 1 damage point from that unit\u2019s damage pool."
+  }
+ ],
+ "battleplans": [
+  {
+   "name": "Avalanche of Ash",
+   "twist": "The underdog must use Collapsing Pass each battle round.",
+   "summary": [
+    {
+     "name": "Collapsing Pass",
+     "who": "Underdog (must use)",
+     "when": "Once per battle round, start of battle round",
+     "effect": "Every objective is a target; pick one as the focus. Roll a dice per objective, +1 for each unit (either side) contesting it; the focus can be +3 or -3. On 8+ that objective is removed."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Control 2 or more objectives"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ],
+    [
+     "3",
+     "If 1 or fewer objectives remain: control a non-faction terrain feature in enemy territory"
+    ],
+    [
+     "7",
+     "If no objectives remain: control more non-faction terrain features than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     0,
+     240,
+     264,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     240,
+     88,
+     240,
+     264,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     180,
+     44,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     300,
+     308,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     300,
+     44,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     180,
+     308,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     180,
+     176,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     300,
+     176,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     60,
+     176,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     420,
+     176,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     120,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     240,
+     88,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "c",
+     240,
+     264,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     360,
+     88,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     120,
+     264,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "t",
+     60,
+     44,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     420,
+     308,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "COLLAPSING PASS",
+     "timing": "Once Per Battle Round, Start of Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "usage": "1/battle-round (unit)",
+     "declare": "Pick each objective to be the targets. Then, pick 1 of the targets to be the focus.",
+     "effect": "Roll a dice for each target. Add 1 to the roll for each unit (friendly and enemy) that is contesting it. If the target is the focus, you can add 3 to or subtract 3 from the roll. On a 8+, remove the target from the battlefield."
+    }
+   ]
+  },
+  {
+   "name": "Bloodstained Coasts",
+   "twist": "From battle round 2, both players can use Emberstone Cache and Emberstone-Augmented Weapons.",
+   "summary": [
+    {
+     "name": "Emberstone Cache",
+     "who": "Both players",
+     "when": "Once per turn (army), your hero phase",
+     "effect": "Give a friendly unit contesting an objective you control an emberstone sliver."
+    },
+    {
+     "name": "Emberstone-Augmented Weapons",
+     "who": "Both players (from round 2)",
+     "when": "Any combat phase",
+     "effect": "Pick a friendly unit that charged this turn and has slivers: +1 to hit OR +1 to wound for its combat attacks this turn. Then the underdog removes that unit's slivers; otherwise remove slivers from every friendly unit."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Control 2 or more objectives"
+    ],
+    [
+     "4",
+     "Round 1 only: control more objectives than your opponent"
+    ],
+    [
+     "4",
+     "Round 2 onwards: control an objective your opponent controlled at the start of the turn"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     120,
+     0,
+     360,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     120,
+     176,
+     360,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     60,
+     176,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     120,
+     88,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     120,
+     264,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     240,
+     44,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     240,
+     308,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     180,
+     176,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     300,
+     176,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     420,
+     176,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     360,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     176,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "c",
+     240,
+     132,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     240,
+     220,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     120,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "t",
+     420,
+     44,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     424,
+     308,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "EMBERSTONE CACHE",
+     "timing": "Once Per Turn (Army), Your Hero Phase",
+     "kind": "active",
+     "who": "your",
+     "when": "hero",
+     "usage": "1/turn (army)",
+     "declare": "Pick a friendly unit contesting an objective you control to be the target.",
+     "effect": "Give the target an emberstone sliver."
+    },
+    {
+     "name": "EMBERSTONE-AUGMENTED WEAPONS",
+     "timing": "Any Combat Phase",
+     "kind": "active",
+     "who": "any",
+     "when": "combat",
+     "declare": "Pick a friendly unit that charged this turn and has any emberstone slivers to be the target.",
+     "effect": "Pick 1 of the following effects to apply for the rest of the turn:\nAdd 1 to hit rolls for the target\u2019s combat attacks.\nAdd 1 to wound rolls for the target\u2019s combat attacks.\nThen, if you are the underdog, remove all of the target\u2019s emberstone slivers. Otherwise, remove all emberstone slivers from each friendly unit."
+    }
+   ]
+  },
+  {
+   "name": "Caverns of Slaughter",
+   "twist": "The underdog can use Shifting Passages; both players can use Navigate the Tunnels.",
+   "summary": [
+    {
+     "name": "Shifting Passages",
+     "who": "Underdog",
+     "when": "Once per battle round, start of battle round",
+     "effect": "Remove any hidden passage tokens, then give 2 non-faction terrain features a hidden passage token each."
+    },
+    {
+     "name": "Navigate the Tunnels",
+     "who": "Both players",
+     "when": "Once per turn (army), your movement phase",
+     "effect": "A friendly unit wholly within 6\" of a terrain feature with a token is set up again wholly within 6\" of a different token terrain feature and more than 9\" from all enemy units."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Control 2 or more objectives"
+    ],
+    [
+     "4",
+     "Control any pair of objectives"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     88,
+     240,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     240,
+     88,
+     240,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     164,
+     176,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     316,
+     176,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     60,
+     264,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     420,
+     88,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     60,
+     44,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     420,
+     308,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     300,
+     44,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     180,
+     308,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     240,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     120,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     240,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     240,
+     88,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     360,
+     264,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "t",
+     60,
+     132,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     420,
+     220,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "NAVIGATE THE TUNNELS",
+     "timing": "Once Per Turn (Army), Your Movement Phase",
+     "kind": "active",
+     "who": "your",
+     "when": "movement",
+     "usage": "1/turn (army)",
+     "declare": "Pick a friendly unit wholly within 6\" of a terrain feature that has a hidden passage token to be the target.",
+     "effect": "Remove the target from the battlefield and set it up again wholly within 6\" of a different terrain feature that has a hidden passage token and more than 9\" from all enemy units."
+    },
+    {
+     "name": "SHIFTING PASSAGES",
+     "timing": "Once Per Battle Round, Start of Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "usage": "1/battle-round (unit)",
+     "declare": "Pick 2 non-FACTION TERRAIN terrain features to be the targets.",
+     "effect": "Remove all hidden passage tokens from the battlefield (if any). Then, give each target a hidden passage token."
+    }
+   ]
+  },
+  {
+   "name": "Curse of the Gnaw",
+   "twist": "Instability starts at 1 and goes up by 1 (max 6) each time either player uses Activate Place of Power. After first turn is decided, the underdog can use Echoes of Blight City.",
+   "summary": [
+    {
+     "name": "Echoes of Blight City",
+     "who": "Underdog",
+     "when": "Once per battle round, start of battle round",
+     "effect": "Pick an objective: every unit (either side) contesting it takes mortal damage equal to the instability level. Then instability resets to 1."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control the Golden Lions objective"
+    ],
+    [
+     "3",
+     "Control the Sun Seekers objective"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     240,
+     0,
+     240,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     0,
+     176,
+     240,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     0,
+     88,
+     120,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     240,
+     264,
+     120,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     360,
+     176,
+     120,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     120,
+     0,
+     120,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     252,
+     88,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     228,
+     264,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     372,
+     88,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     108,
+     264,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     180,
+     120,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     300,
+     232,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     60,
+     124,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     420,
+     228,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     120,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     264,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     180,
+     176,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "c",
+     300,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "t",
+     420,
+     44,
+     "Defender",
+     "zone-label"
+    ],
+    [
+     "t",
+     64,
+     308,
+     "Attacker",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "ECHOES OF BLIGHT CITY",
+     "timing": "Once Per Battle Round, Start of Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "usage": "1/battle-round (unit)",
+     "declare": "Pick an objective to be the target.",
+     "effect": "Inflict an amount of mortal damage on each unit (friendly and enemy) contesting the target equal to the Instability level. Then, reset the Instability level to 1."
+    }
+   ]
+  },
+  {
+   "name": "Escape From the Coast",
+   "twist": "The underdog can use To the Ships! to remove objectives.",
+   "summary": [
+    {
+     "name": "To the Ships!",
+     "who": "Underdog",
+     "when": "Once per battle round, start of battle round",
+     "effect": "Remove the Heldenhain or a Sun Seekers objective from the battlefield."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Control 2 or more objectives"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     0,
+     240,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     240,
+     0,
+     240,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     0,
+     176,
+     240,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     240,
+     264,
+     240,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     180,
+     88,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     180,
+     264,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     300,
+     44,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     300,
+     308,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     440,
+     176,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     292,
+     176,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     120,
+     176,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     40,
+     176,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     60,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     60,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     88,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     360,
+     264,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     180,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     360,
+     176,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "t",
+     60,
+     44,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     60,
+     308,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "TO THE SHIPS!",
+     "timing": "Once Per Battle Round, Start of Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "usage": "1/battle-round (unit)",
+     "declare": "Pick the Heldenhain or a Sun Seekers objective to be the target.",
+     "effect": "Remove the target from the battlefield."
+    }
+   ]
+  },
+  {
+   "name": "Hidden Under Ash-Clouds",
+   "twist": "Each battle round the underdog chooses whether the ash-clouds are low-lying (with no underdog, they are). Rolling Ash-Clouds applies while they are.",
+   "summary": [
+    {
+     "name": "Rolling Ash-Clouds",
+     "who": "Both players",
+     "when": "Passive, while low-lying",
+     "effect": "Nothing can be set up in neutral territory, or end a move there unless it started the move wholly within it. Models, terrain and manifestations more than 3\" away are not visible unless a straight line between the bases avoids neutral territory."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Control 2 or more objectives"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     0,
+     480,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     0,
+     88,
+     120,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     360,
+     88,
+     120,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     0,
+     264,
+     480,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     0,
+     176,
+     120,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     360,
+     176,
+     120,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     420,
+     264,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     60,
+     88,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     372,
+     88,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     108,
+     264,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     180,
+     108,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     300,
+     244,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     300,
+     140,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     180,
+     212,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     240,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     120,
+     176,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     360,
+     176,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     300,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     180,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "t",
+     60,
+     44,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     420,
+     308,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "ROLLING ASH-CLOUDS",
+     "timing": "Passive",
+     "kind": "passive",
+     "who": "neutral",
+     "when": "always",
+     "effect": "While the ash-clouds are low-lying:\nUnits, terrain features and MANIFESTATIONS cannot be set up in neutral territory.\nUnits, terrain features and MANIFESTATIONS cannot end a move within neutral territory unless they started that move wholly within neutral territory.\nModels, terrain features and MANIFESTATIONS are not visible to other models more than 3\" away unless a straight line can be drawn between any points on their bases that does not cross neutral territory."
+    }
+   ]
+  },
+  {
+   "name": "Into the Fire",
+   "twist": "Both armies have Secure the Gateway. The underdog also gets Determined Defenders.",
+   "summary": [
+    {
+     "name": "Secure the Gateway",
+     "who": "Both players",
+     "when": "Passive",
+     "effect": "While you control the Place of Power wholly within your own territory, your units' melee weapons get Anti-charge (+1 Rend) while contesting an objective you control."
+    },
+    {
+     "name": "Determined Defenders",
+     "who": "Underdog",
+     "when": "Passive",
+     "effect": "+3 control score for your units while they are wholly outside enemy territory."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Control 2 or more objectives"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     0,
+     120,
+     264,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     360,
+     88,
+     120,
+     264,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     120,
+     88,
+     120,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     240,
+     88,
+     120,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     120,
+     44,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     360,
+     308,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     300,
+     88,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     180,
+     264,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     180,
+     132,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     300,
+     220,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     420,
+     116,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     60,
+     236,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     120,
+     176,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     176,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     240,
+     44,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     240,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     240,
+     308,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "t",
+     60,
+     132,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     420,
+     220,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "DETERMINED DEFENDERS",
+     "timing": "Passive",
+     "kind": "passive",
+     "who": "neutral",
+     "when": "always",
+     "effect": "Add 3 to the control scores of friendly units while they are wholly outside enemy territory."
+    },
+    {
+     "name": "SECURE THE GATEWAY",
+     "timing": "Passive",
+     "kind": "passive",
+     "who": "neutral",
+     "when": "always",
+     "effect": "While you control the Place of Power wholly within friendly territory, friendly units\u2019 melee weapons have Anti-charge (+1 Rend) while they are contesting an objective you control."
+    }
+   ]
+  },
+  {
+   "name": "Power of the Realms",
+   "twist": "Sun Seekers starts as the primary objective; the rest are secondary. The underdog can move the primary with Arcane Charge.",
+   "summary": [
+    {
+     "name": "Arcane Charge",
+     "who": "Underdog",
+     "when": "Once per battle round, start of battle round",
+     "effect": "Pick a Place of Power you control and draw a line from the primary objective's centre to it: the first secondary objective the line crosses becomes the primary (all others secondary)."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control the primary objective"
+    ],
+    [
+     "3",
+     "Control 2 or more secondary objectives"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     0,
+     480,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     0,
+     176,
+     480,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     120,
+     88,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     360,
+     264,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     360,
+     88,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     120,
+     264,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     36,
+     176,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     444,
+     176,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     300,
+     308,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     180,
+     44,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     240,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     240,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     120,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     240,
+     176,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     360,
+     176,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "t",
+     60,
+     44,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     420,
+     308,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "ARCANE CHARGE",
+     "timing": "Once Per Battle Round, Start of Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "usage": "1/battle-round (unit)",
+     "declare": "Pick a Place of Power you control to be the target.",
+     "effect": "Draw a straight line from the centre of the primary objective to the target. If that line crosses any secondary objectives, the first secondary objective that the line crosses is now the primary objective and all other objectives are now secondary objectives."
+    }
+   ]
+  },
+  {
+   "name": "Seize the Embers",
+   "twist": "Both players can use Search the Ruin and Back to Base Camp: pick up nuggets on Sun Seekers, bank them on Golden Lions.",
+   "summary": [
+    {
+     "name": "Search the Ruin",
+     "who": "Both players",
+     "when": "End of your turn",
+     "effect": "A friendly unit without a nugget contesting a Sun Seekers objective gains an emberstone nugget. If you're the underdog it can then move 6\" (not into combat). It can't use Back to Base Camp or Power Through this turn."
+    },
+    {
+     "name": "Back to Base Camp",
+     "who": "Both players",
+     "when": "Once per turn (army), end of your turn",
+     "effect": "A friendly unit with a nugget, not set up this turn, contesting a Golden Lions objective: remove its nugget (this is what scores)."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Round 1 only: control 2 or more objectives"
+    ],
+    [
+     "3",
+     "Round 2 onwards: you used Back to Base Camp this turn"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     120,
+     0,
+     360,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     360,
+     176,
+     120,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     0,
+     176,
+     360,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     0,
+     0,
+     120,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "c",
+     60,
+     44,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     420,
+     308,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     180,
+     132,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     300,
+     220,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     292,
+     88,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     188,
+     264,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     92,
+     176,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     388,
+     176,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     120,
+     88,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     360,
+     264,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     360,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     120,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     240,
+     176,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "t",
+     420,
+     44,
+     "Defender",
+     "zone-label"
+    ],
+    [
+     "t",
+     60,
+     308,
+     "Attacker",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "SEARCH THE RUIN",
+     "timing": "End of Your Turn",
+     "kind": "active",
+     "who": "your",
+     "when": "end-of-turn",
+     "declare": "Pick a friendly unit that does not have an emberstone nugget and is contesting a Sun Seekers objective to be the target.",
+     "effect": "Give the target an emberstone nugget. If you are the underdog, the target can immediately move 6\" but cannot end that move in combat. The target cannot use the \u2018Back to Base Camp\u2019 or \u2018Power Through\u2019 ability for the rest of the turn."
+    },
+    {
+     "name": "BACK TO BASE CAMP",
+     "timing": "Once Per Turn (Army), End of Your Turn",
+     "kind": "active",
+     "who": "your",
+     "when": "end-of-turn",
+     "usage": "1/turn (army)",
+     "declare": "Pick a friendly unit that has an emberstone nugget, was not set up this turn and is contesting a Golden Lions objective to be the target.",
+     "effect": "Remove the target\u2019s emberstone nugget."
+    }
+   ]
+  },
+  {
+   "name": "Treacherous Ground",
+   "twist": "All objectives start stable. Both players must use Tread Carefully at the start of round 1; from round 2 the underdog can use Violent Tremor. Only stable objectives score.",
+   "summary": [
+    {
+     "name": "Tread Carefully",
+     "who": "Both players (must use)",
+     "when": "Once per battle (army), start of first battle round",
+     "effect": "Pick an objective in your own territory: it is no longer stable."
+    },
+    {
+     "name": "Violent Tremor",
+     "who": "Underdog (round 2 onwards)",
+     "when": "Once per battle round, start of battle round",
+     "effect": "Pick a pair of objectives: swap which one is stable."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 stable objective"
+    ],
+    [
+     "3",
+     "Control 2 or more stable objectives"
+    ],
+    [
+     "4",
+     "Control more stable objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     0,
+     480,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     120,
+     88,
+     240,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     0,
+     264,
+     480,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     120,
+     176,
+     240,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     52,
+     88,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     428,
+     264,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     272,
+     264,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     208,
+     88,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     180,
+     176,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     300,
+     176,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     60,
+     308,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     420,
+     44,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     120,
+     88,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     360,
+     88,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     120,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     60,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     420,
+     176,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "t",
+     60,
+     24,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     420,
+     328,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "TREAD CAREFULLY",
+     "timing": "Once Per Battle (Army), Start of First Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "round": 1,
+     "usage": "1/battle (army)",
+     "declare": "Pick an objective within friendly territory to be the target.",
+     "effect": "The target is no longer stable."
+    },
+    {
+     "name": "VIOLENT TREMOR",
+     "timing": "Once Per Battle Round, Start of Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "usage": "1/battle-round (unit)",
+     "declare": "Pick a pair of objectives to be the targets.",
+     "effect": "The stable target objective is no longer stable. The other target objective is stable instead."
+    }
+   ]
+  },
+  {
+   "name": "Warped Ruins",
+   "twist": "Every non-faction terrain feature must be set up within 12\" of another. The underdog must use Spreading Warpfire each battle round.",
+   "summary": [
+    {
+     "name": "Spreading Warpfire",
+     "who": "Underdog (must use)",
+     "when": "Once per battle round, start of battle round",
+     "effect": "Set a non-faction terrain feature flaming for the rest of the battle (the first can be any; later ones must be within 12\" of a flaming feature). Then D3 mortal damage to every unit (either side) within 6\" of any flaming feature."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Control any pair of objectives"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     176,
+     480,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     0,
+     0,
+     480,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "c",
+     388,
+     88,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     388,
+     264,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     92,
+     84,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     92,
+     268,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     180,
+     176,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     60,
+     176,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     300,
+     176,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     420,
+     176,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     180,
+     88,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     300,
+     264,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     300,
+     88,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     180,
+     264,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     120,
+     176,
+     30.3,
+     "objective objective-heldenhain"
+    ],
+    [
+     "t",
+     420,
+     308,
+     "Defender",
+     "zone-label"
+    ],
+    [
+     "t",
+     60,
+     44,
+     "Attacker",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "SPREADING WARPFIRE",
+     "timing": "Once Per Battle Round, Start of Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "usage": "1/battle-round (unit)",
+     "declare": "If there are no flaming terrain features on the battlefield, pick a non-FACTION TERRAIN terrain feature to be the target. Otherwise, pick a non-FACTION TERRAIN terrain feature that is not flaming and that is within 12\" of a flaming terrain feature to be the target.",
+     "effect": "The target is flaming for the rest of the battle. Then, inflict D3 mortal damage on each unit (friendly and enemy) within 6\" of any flaming terrain features."
+    }
+   ]
+  },
+  {
+   "name": "What's Yours is Ours",
+   "twist": "Odd battle rounds: the Golden Lions pair is the coveted pair. Even rounds: the Sun Seekers pair. The underdog can switch it with All the Rage.",
+   "summary": [
+    {
+     "name": "All the Rage",
+     "who": "Underdog",
+     "when": "Once per battle round, start of battle round",
+     "effect": "Pick a pair of objectives: it is the coveted pair for the rest of the battle round instead of the other pair."
+    }
+   ],
+   "scoring": [
+    [
+     "3",
+     "Control at least 1 objective"
+    ],
+    [
+     "3",
+     "Control the coveted pair of objectives"
+    ],
+    [
+     "4",
+     "Control more objectives than your opponent"
+    ]
+   ],
+   "map": [
+    [
+     "r",
+     0,
+     0,
+     240,
+     176,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     360,
+     0,
+     120,
+     88,
+     "zone zone-attacker"
+    ],
+    [
+     "r",
+     0,
+     176,
+     240,
+     176,
+     "zone zone-defender"
+    ],
+    [
+     "r",
+     360,
+     264,
+     120,
+     88,
+     "zone zone-defender"
+    ],
+    [
+     "c",
+     120,
+     88,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     120,
+     264,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     300,
+     44,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     300,
+     308,
+     28,
+     "terrain terrain-ruin"
+    ],
+    [
+     "c",
+     428,
+     176,
+     28,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     52,
+     176,
+     28,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     180,
+     176,
+     20,
+     "terrain terrain-place_of_power"
+    ],
+    [
+     "c",
+     300,
+     176,
+     20,
+     "terrain terrain-obscuring"
+    ],
+    [
+     "c",
+     120,
+     176,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     360,
+     176,
+     30.3,
+     "objective objective-golden_lions"
+    ],
+    [
+     "c",
+     240,
+     176,
+     30.3,
+     "objective objective-sigmarite"
+    ],
+    [
+     "c",
+     360,
+     88,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "c",
+     360,
+     264,
+     30.3,
+     "objective objective-sun_seekers"
+    ],
+    [
+     "t",
+     64,
+     44,
+     "Attacker",
+     "zone-label"
+    ],
+    [
+     "t",
+     64,
+     308,
+     "Defender",
+     "zone-label"
+    ]
+   ],
+   "rules": [
+    {
+     "name": "ALL THE RAGE",
+     "timing": "Once Per Battle Round, Start of Battle Round",
+     "kind": "active",
+     "who": "neutral",
+     "when": "battle-round-start",
+     "usage": "1/battle-round (unit)",
+     "declare": "Pick a pair of objectives to be the target.",
+     "effect": "For the rest of the battle round, the target is the coveted pair of objectives instead of the other pair of objectives."
+    }
+   ]
+  }
+ ],
+ "mapLegend": {
+  "golden_lions": [
+   "GL",
+   "Golden Lions"
+  ],
+  "sun_seekers": [
+   "SS",
+   "Sun Seekers"
+  ],
+  "sigmarite": [
+   "S",
+   "Sigmarite"
+  ],
+  "heldenhain": [
+   "H",
+   "Heldenhain"
+  ],
+  "ruin": "Ruin",
+  "obscuring": "Obscuring",
+  "place_of_power": "Place of Power"
+ },
+ "mapSource": "Layouts read from sigdex.io/rules > GHB 2026-27 Battleplans (map geometry: 480x352 = 60x44 inch board, 8 px per inch). Rules text summarised in our own words for team use, 2026-11-02; check the event pack / GW rules for exact wording.",
+ "coreAbilities": [
+  {
+   "name": "REDEPLOY",
+   "timing": "Enemy Movement Phase",
+   "kind": "active",
+   "who": "enemy",
+   "when": "movement",
+   "cost": "Command-Points 1",
+   "keywords": [
+    "MOVE",
+    "RUN"
+   ],
+   "declare": "Pick a friendly unit that is not in combat to use this ability.",
+   "effect": "Each model in that unit can move up to D6\". That move cannot pass through or end within the combat range of an enemy unit.",
+   "section": "3.0 Movement Phase Commands"
+  },
+  {
+   "name": "AT THE DOUBLE",
+   "timing": "Reaction: You declared a RUN ability",
+   "kind": "reaction",
+   "who": "neutral",
+   "when": "reaction",
+   "cost": "Command-Points 1",
+   "effect": "Used By: The unit using that RUN ability.\nDo not make a run roll as part of that RUN ability. Instead, add 6\" to that unit\u2019s Move characteristic to determine the distance each model in that unit can move as part of that RUN ability.",
+   "extra": {
+    "reactionTrigger": "You declared a RUN ability"
+   },
+   "section": "3.0 Movement Phase Commands"
+  },
+  {
+   "name": "ALL-OUT ATTACK",
+   "timing": "Reaction: You declared an ATTACK ability",
+   "kind": "reaction",
+   "who": "neutral",
+   "when": "reaction",
+   "cost": "Command-Points 1",
+   "effect": "Used By: The unit using that ATTACK ability.\nAdd 1 to hit rolls for attacks made as part of that ATTACK ability. This also affects weapons that have the Companion weapon ability. For the rest of the turn, subtract 1 from save rolls for the unit using this ability.",
+   "extra": {
+    "reactionTrigger": "You declared an ATTACK ability"
+   },
+   "section": "6.0 Attacking (Shooting and Combat) Commands"
+  },
+  {
+   "name": "FORWARD TO VICTORY",
+   "timing": "Reaction: You declared a CHARGE ability",
+   "kind": "reaction",
+   "who": "neutral",
+   "when": "reaction",
+   "cost": "Command-Points 1",
+   "effect": "Used By: The unit using that CHARGE ability.\nYou can re-roll the charge roll.",
+   "extra": {
+    "reactionTrigger": "You declared a CHARGE ability"
+   },
+   "section": "5.0 Charge Phase Commands"
+  },
+  {
+   "name": "COUNTER-CHARGE",
+   "timing": "Enemy Charge Phase",
+   "kind": "active",
+   "who": "enemy",
+   "when": "charge",
+   "cost": "Command-Points 2",
+   "declare": "Pick a friendly unit that is not in combat to use this ability.",
+   "effect": "That unit can use a CHARGE ability as if it were your charge phase.",
+   "section": "5.0 Charge Phase Commands"
+  },
+  {
+   "name": "GUARDED HERO",
+   "timing": "Passive",
+   "kind": "passive",
+   "who": "neutral",
+   "when": "always",
+   "effect": "If this HERO(not MONSTER or WAR MACHINES) is within the combat range of a friendly unit that is not a HERO:\nSubtract 1 from hit rolls for shooting attacks that target this HERO.\nIf this HERO is INFANTRY, they cannot be picked as the target of shooting attacks made by models more than 12\" from them.",
+   "section": "25.0 Guarded Heroes"
+  },
+  {
+   "name": "CHAMPION",
+   "timing": "Passive",
+   "kind": "passive",
+   "who": "neutral",
+   "when": "always",
+   "effect": "Add 1 to the Attacks characteristic of weapons used by champions in this unit. If this unit is a BEAST, this ability affects this unit\u2019s Companion weapons.",
+   "section": "1.0 Champions"
+  },
+  {
+   "name": "ALL-OUT DEFENCE",
+   "timing": "Reaction: Opponent declared an ATTACK ability",
+   "kind": "reaction",
+   "who": "neutral",
+   "when": "reaction",
+   "cost": "Command-Points 1",
+   "effect": "Used By: A unit targeted by that ATTACK ability.\nAdd 1 to save rolls for that unit until that ATTACK ability has been resolved.",
+   "extra": {
+    "reactionTrigger": "Opponent declared an ATTACK ability"
+   },
+   "section": "7.0 Defensive Commands"
+  },
+  {
+   "name": "MAGICAL INTERVENTION",
+   "timing": "Enemy Hero Phase",
+   "kind": "active",
+   "who": "enemy",
+   "when": "hero",
+   "cost": "Command-Points 1",
+   "declare": "Pick a friendly WIZARD or PRIEST to use this ability.",
+   "effect": "That friendly unit can use a SPELL, PRAYER or BANISH ability (as appropriate) as if it were your hero phase. If you do so, subtract 1 from casting rolls or chanting rolls made as part of that ability.",
+   "section": "2.0 Hero Phase Commands"
+  },
+  {
+   "name": "RALLY",
+   "timing": "Any Hero Phase",
+   "kind": "active",
+   "who": "any",
+   "when": "hero",
+   "cost": "Command-Points 1",
+   "declare": "Pick a friendly unit that is not in combat to use this ability.",
+   "effect": "Make 6 rally rolls of D6. For each 4+, you receive 1 rally point. Rally points can be spent in the following ways:\nFor each rally point spent, Heal (1) that unit.\nYou can spend a number of rally points equal to the Health characteristic of that unit to return a slain model to that unit.\nYou can spend the rally points in any combination of the above. Unspent rally points are then lost.",
+   "section": "2.0 Hero Phase Commands"
+  },
+  {
+   "name": "STANDARD BEARER",
+   "timing": "Passive",
+   "kind": "passive",
+   "who": "neutral",
+   "when": "always",
+   "effect": "While this unit contains any standard bearers, add 1 to this unit\u2019s control score.",
+   "section": "3.0 Standard Bearers"
+  },
+  {
+   "name": "SACRED RITES",
+   "timing": "Your Hero Phase",
+   "kind": "active",
+   "who": "your",
+   "when": "hero",
+   "keywords": [
+    "PRAYER",
+    "UNLIMITED"
+   ],
+   "declare": "Pick a friendly PRIEST to use this ability, then make a chanting roll of D6. On an unmodified chanting roll of 1, remove 1 ritual point from that PRIEST instead of D3.",
+   "effect": "Give a number to ritual points to the PRIEST equal to the unmodified chanting roll and do not reset the PRIEST\u2019s ritual points to 0.",
+   "section": "3.0 Prayers"
+  },
+  {
+   "name": "POWER THROUGH",
+   "timing": "End of Any Turn",
+   "kind": "active",
+   "who": "any",
+   "when": "end-of-turn",
+   "cost": "Command-Points 1",
+   "keywords": [
+    "MOVE"
+   ],
+   "declare": "Pick a friendly unit that charged this turn to use this ability, then you must pick an enemy unit in combat with it to be the target. The target must have a lower Health characteristic than the unit using this ability.",
+   "effect": "Inflict D3 mortal damage on the target. Then, the unit using this ability can move a distance up to its Move characteristic. It can pass through and end that move within the combat ranges of enemy units that were in combat with it at the start of the move, but not those of other enemy units. It does not have to end the move in combat.",
+   "section": "8.0 End of Turn Commands"
+  },
+  {
+   "name": "MUSICIAN",
+   "timing": "Passive",
+   "kind": "passive",
+   "who": "neutral",
+   "when": "always",
+   "effect": "While this unit contains any musicians, if it uses the \u2018Rally\u2019 command, you can make one additional rally roll of D6.",
+   "section": "2.0 Musicians"
+  },
+  {
+   "name": "UNBIND",
+   "timing": "Reaction: Opponent declared a SPELL ability",
+   "kind": "reaction",
+   "who": "neutral",
+   "when": "reaction",
+   "keywords": [
+    "UNBIND"
+   ],
+   "effect": "Used By: A friendly WIZARD within 30\" of the enemy WIZARD casting the spell.\nMake an unbinding roll of 2D6. If the roll exceeds the casting roll for the spell, then the spell is unbound and its effect is not resolved. This reaction cannot be used more than once per casting roll.",
+   "extra": {
+    "reactionTrigger": "Opponent declared a SPELL ability"
+   },
+   "section": "4.0 Unbinding Spells"
+  },
+  {
+   "name": "COVERING FIRE",
+   "timing": "Enemy Shooting Phase",
+   "kind": "active",
+   "who": "enemy",
+   "when": "shooting",
+   "cost": "Command-Points 1",
+   "keywords": [
+    "SHOOT",
+    "ATTACK"
+   ],
+   "declare": "Pick a friendly unit that did not use a RUN ability this turn and that is not in combat to use this ability, then pick the closest enemy unit (to that unit) that can be picked as the target of shooting attacks to be the target. You cannot pick MANIFESTATIONS or faction terrain features as the target of this ability.",
+   "effect": "Resolve shooting attacks for the unit using this ability against the target. You must subtract 1 from the hit rolls for those attacks.",
+   "section": "4.0 Shooting Phase Commands"
+  }
+ ]
+}

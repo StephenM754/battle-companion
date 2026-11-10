@@ -1,0 +1,12 @@
+# local server database and caches (never upload)
+data/app.db
+data/app.db-*
+data/stats/raw/
+__pycache__/
+*.pyc
+.DS_Store
+# secrets (Supabase service-role key etc. must never be committed)
+.env
+secrets.env
+*.local.json
+data/export-*.json
