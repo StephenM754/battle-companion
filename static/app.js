@@ -572,6 +572,13 @@ async function viewPlay(list, army) {
 const BW = 60, BH = 44, MM_IN = 25.4;
 const DEP_COLORS = ["#e0675f", "#6aa8e8", "#5fbf7f", "#e0b450", "#b07ae0", "#4fc1c1", "#e07ab8", "#a3c25a", "#e09a4f", "#8c94e8", "#c9a27e", "#7ec99f"];
 const r2 = v => Math.round(v * 100) / 100;
+const coarse = matchMedia("(pointer: coarse)").matches;   // phone or tablet: real full screen instead of a popup
+let depExitFull = null;   // set while the deploy board is full screen
+const depFsChange = () => { if (!(document.fullscreenElement || document.webkitFullscreenElement) && depExitFull) depExitFull(); };
+document.addEventListener("fullscreenchange", depFsChange);
+document.addEventListener("webkitfullscreenchange", depFsChange);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && depExitFull) depExitFull(); });
+window.addEventListener("hashchange", () => { document.body.classList.remove("dep-lock"); depExitFull = null; document.body.appendChild($("#toast")); });
 const mmTxt = b => `${+b[0].toFixed(1)}${b[0] !== b[1] ? "×" + +b[1].toFixed(1) : ""}mm`;
 
 // Models for one list entry. Base data is [[width_mm, depth_mm, count|null], …] from build_rules.py.
@@ -678,6 +685,7 @@ function clusterOffsets(models) {
 }
 
 async function viewDeploy(list, army) {
+  document.body.classList.remove("dep-lock"); depExitFull = null;
   const bps = (army.ghb.battleplans || []).filter(b => b.map?.length);
   if (!bps.length) { app.innerHTML = `<div class="card empty">No battleplan maps in the rules data.</div>`; return; }
   const game = store.get(`bc-game-${list.id}`, {});
@@ -733,12 +741,17 @@ async function viewDeploy(list, army) {
         <div class="dep-zoom"><button data-z="in" aria-label="Zoom in">+</button><button data-z="out" aria-label="Zoom out">−</button><button data-z="fit" aria-label="Show whole table">⤢</button></div>
       </div>
       <div class="row dep-tools">
-        <div class="seg" id="dmode"><button data-mode="unit">Move unit</button><button data-mode="model">Model</button></div>
+        <div class="seg" id="dmode"><button data-mode="unit" title="Drag moves the whole unit">Unit</button><button data-mode="model" title="Drag moves one model">Model</button></div>
         <button class="btn small" data-act="rotl" aria-label="Rotate 15° anticlockwise">↺</button>
         <button class="btn small" data-act="rotr" aria-label="Rotate 15° clockwise">↻</button>
-        <button class="btn small" data-act="undo">Undo</button>
+        <button class="btn small" data-act="undo" aria-label="Undo" title="Undo"><svg class="ico" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+        <span class="dep-tools-end">
+          <button class="btn small" data-act="img" aria-label="Save image" title="Save image"><svg class="ico" viewBox="0 0 24 24"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg></button>
+          <button class="btn small" data-act="full" id="dfull" aria-label="Full screen" title="Full screen"><svg class="ico" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button>
+        </span>
       </div>
       <div id="dstatus" class="tiny"></div>
+      <div class="dep-rotate-hint tiny muted">Turn your phone sideways for a bigger table.</div>
     </div>
     <div class="card tight">
       <div class="row wrap"><span class="small muted">Ring round selected unit</span>
@@ -756,7 +769,7 @@ async function viewDeploy(list, army) {
       : `<b>${esc(u.name)}</b>: ${[u.sizeMissing && "unit size not in the rules data (using 1 model)", u.guessed && `base size not in the rules data ("${esc((u.w.baseSizes || []).join(", ") || "none")}"), using ${esc(u.label)}`].filter(Boolean).join("; ")}.`).join("<br>")}</div>` : ""}
     <div class="row spread" style="margin-top:.8rem"><h2 style="margin:0">Units</h2><button class="btn small" data-act="placeall">Place all</button></div>
     <div id="dtray"></div>
-    <p class="tiny muted">Drag a model to move it (Move unit moves the whole unit; Model moves one). Drag empty table to pan, pinch or use + − to zoom. Red dashed bases are not wholly inside your territory or are within 9″ of enemy territory. Model counts come from the warscroll unit size (doubled when reinforced); bases are drawn at true size. Your current layout is kept on this device; Save stores it on the server.</p>
+    <p class="tiny muted">Drag a model to move it (Unit moves the whole unit; Model moves one). Place regiment puts a regiment in no man's land, clear of the rest of your army, ready to drag in. ⤓ saves a picture of the table; ⛶ goes full screen. Drag empty table to pan, pinch or use + − to zoom. Red dashed bases are not wholly inside your territory or are within 9″ of enemy territory. Model counts come from the warscroll unit size (doubled when reinforced); bases are drawn at true size. Your current layout is kept on this device; Save stores it on the server.</p>
   </div>`;
 
   const svg = $("#dboard"), root = $("#dep");
@@ -812,7 +825,8 @@ async function viewDeploy(list, army) {
     $("#dtplstate").textContent = tpl ? (JSON.stringify(tpl.data) === JSON.stringify(D.layout) ? "Saved." : "Unsaved changes.") : (placed ? "Not saved yet: use Save to keep it as a named deployment." : "");
     if (light) return;
     segs();
-    $("#dtray").innerHTML = regs.map(rg => `<div class="card tight"><h4 style="margin:0 0 .2rem">${esc(rg)}</h4>${units.filter(u => u.regiment === rg).map(u => {
+    $("#dtray").innerHTML = regs.map((rg, ri) => `<div class="card tight"><div class="row spread" style="margin-bottom:.2rem"><h4 style="margin:0">${esc(rg)}</h4>
+      ${units.some(u => u.regiment === rg && !u.missing && !D.layout.units[u.uid]) ? `<button class="btn small" data-act="placereg" data-r="${ri}" title="Puts the regiment in no man's land, clear of the rest of your army, ready to drag in">Place regiment</button>` : ""}</div>${units.filter(u => u.regiment === rg).map(u => {
       const st = stat[u.uid];
       return `<div class="dep-unit ${D.sel === u.uid ? "on" : ""}" data-u="${u.uid}">
         <i class="sw" style="background:${u.color}"></i>
@@ -825,26 +839,118 @@ async function viewDeploy(list, army) {
   }
   const commit = () => { saveDraft(); draw(); };
 
-  function autoSpot(u) {
-    const [mine, enemy] = sides(), off = clusterOffsets(u.models), side = D.layout.side;
+  // A free spot for the unit as a coherent block, 1" clear of other units. Normally a legal spot in your
+  // territory; with neutral, a spot in no man's land (½" clear of both territories) so it stands out to drag in.
+  function autoSpot(u, o = {}) {
+    const [mine, enemy] = sides(), off = clusterOffsets(u.models), side = D.layout.side, zonesAll = [...mine, ...enemy];
     const others = [];
     for (const [uid, pl] of Object.entries(D.layout.units)) if (uid !== u.uid) pl.m.forEach((p, i) => { const b = byId[uid].models[i]; others.push([p[0], p[1], Math.max(b.w, b.h) / 2]); });
     const big = mine.slice().sort((a, b) => b.w * b.h - a.w * a.h)[0] || { x: 0, y: 0, w: BW, h: BH };
     const v = D.view, vh = v.w * BH / BW;
-    const pref = v.w < BW - 1 ? [v.x + v.w / 2, v.y + vh / 2] : [big.x + big.w / 2, big.y + big.h / 2];
+    const pref = o.pref || (o.neutral ? [BW / 2, BH / 2] : v.w < BW - 1 ? [v.x + v.w / 2, v.y + vh / 2] : [big.x + big.w / 2, big.y + big.h / 2]);
+    const okAt = o.neutral
+      ? (x, y, b) => rimPts(x, y, 0, b).every(p => p[0] > .25 && p[0] < BW - .25 && p[1] > .25 && p[1] < BH - .25 && zonesAll.every(r => rectDist(p, r) > .5))
+      : (x, y, b) => legalAt(x, y, 0, b, mine, enemy);
     const cands = [];
     for (let x = 0.5; x < BW; x += 0.5) for (let y = 0.5; y < BH; y += 0.5) cands.push([x, y, (x - pref[0]) ** 2 + (y - pref[1]) ** 2]);
     cands.sort((a, b) => a[2] - b[2]);
     const fits = (cx, cy) => u.models.every((b, i) => {
       const x = cx + off[i][0], y = cy + off[i][1], R = Math.max(b.w, b.h) / 2;
-      return legalAt(x, y, 0, b, mine, enemy) && others.every(o => Math.hypot(o[0] - x, o[1] - y) > o[2] + R + 1);
+      return okAt(x, y, b) && others.every(q => Math.hypot(q[0] - x, q[1] - y) > q[2] + R + 1);
     });
     const hit = cands.find(c => fits(c[0], c[1]));
-    if (!hit) toast(`No free legal spot for ${u.name} as the ${side}: placed in the middle, move it yourself`);
+    if (!hit) toast(o.neutral ? `No free spot in no man's land for ${u.name}: placed in the middle, move it yourself`
+      : `No free legal spot for ${u.name} as the ${side}: placed in the middle, move it yourself`);
     const [cx, cy] = hit || pref;
-    return off.map(o => [r2(Math.min(BW, Math.max(0, cx + o[0]))), r2(Math.min(BH, Math.max(0, cy + o[1]))), 0]);
+    return off.map(q => [r2(Math.min(BW, Math.max(0, cx + q[0]))), r2(Math.min(BH, Math.max(0, cy + q[1]))), 0]);
   }
   const place = u => { D.layout.units[u.uid] = { n: u.name, m: autoSpot(u) }; D.sel = u.uid; D.selModel = null; };
+  function placeRegiment(rg) {
+    const todo = units.filter(x => x.regiment === rg && !x.missing && !D.layout.units[x.uid]);
+    if (!todo.length) { toast("That regiment is already on the table"); return; }
+    pushHist();
+    let pref = null;
+    for (const u of todo) {   // each unit goes next to the previous one, so the regiment stays together
+      const m = autoSpot(u, { neutral: true, pref });
+      D.layout.units[u.uid] = { n: u.name, m };
+      pref = [m.reduce((s, p) => s + p[0], 0) / m.length, m.reduce((s, p) => s + p[1], 0) / m.length];
+    }
+    D.sel = todo[0].uid; D.selModel = null;
+    D.view = { x: 0, y: 0, w: BW }; setView();
+    commit();
+    toast(`${rg}: ${todo.length} unit${todo.length === 1 ? "" : "s"} in no man's land, drag them into your territory`);
+  }
+
+  // ---- save image: the whole table as a PNG, with the list, battleplan and side across the top
+  async function saveImage() {
+    const keep = [D.sel, D.selModel];
+    D.sel = null; D.selModel = null; draw(true);
+    const clone = svg.cloneNode(true);
+    const src = [svg, ...svg.querySelectorAll("*")], dst = [clone, ...clone.querySelectorAll("*")];
+    const props = ["fill", "fill-opacity", "stroke", "stroke-width", "stroke-opacity", "stroke-dasharray", "opacity", "font-size", "font-weight", "font-family", "text-anchor", "dominant-baseline", "display"];
+    src.forEach((el, i) => { const cs = getComputedStyle(el); for (const p of props) { const v = cs.getPropertyValue(p); if (v && !/url\(/.test(v)) dst[i].style.setProperty(p, v); } });
+    const bg = getComputedStyle(svg).backgroundColor, page = getComputedStyle(document.body), ink = page.color, paper = page.backgroundColor;
+    [D.sel, D.selModel] = keep; draw(true);
+    const PX = 25, W = BW * PX, H = BH * PX, HEAD = 64;
+    clone.setAttribute("viewBox", `0 0 ${BW} ${BH}`); clone.setAttribute("width", W); clone.setAttribute("height", H);
+    clone.removeAttribute("style"); clone.removeAttribute("class");
+    clone.insertAdjacentHTML("afterbegin", `<rect x="0" y="0" width="${BW}" height="${BH}" style="fill:${bg}"/>`);
+    const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: "image/svg+xml" }));
+    try {
+      const img = new Image();
+      await new Promise((ok, bad) => { img.onload = ok; img.onerror = () => bad(new Error("Couldn't draw the table")); img.src = url; });
+      const c = document.createElement("canvas"); c.width = W; c.height = H + HEAD;
+      const g = c.getContext("2d");
+      g.fillStyle = paper; g.fillRect(0, 0, c.width, c.height);
+      g.fillStyle = ink; g.textBaseline = "middle";
+      g.font = `700 26px ${page.fontFamily}`; g.fillText(list.name, 16, HEAD / 2 - 10);
+      g.font = `400 20px ${page.fontFamily}`;
+      const placed = Object.values(D.layout.units).reduce((s, pl) => s + pl.m.length, 0);
+      g.fillText(`${bpName} · ${D.layout.side === "attacker" ? "Attacker" : "Defender"} · ${placed} models`, 16, HEAD / 2 + 16);
+      g.drawImage(img, 0, HEAD, W, H);
+      const blob = await new Promise(ok => c.toBlob(ok, "image/png"));
+      const fname = `${list.name} - ${bpName} - ${D.layout.side}.png`.replace(/[\\/:*?"<>|]+/g, "");
+      const file = new File([blob], fname, { type: "image/png" });
+      if (coarse && navigator.canShare?.({ files: [file] })) {
+        try { await navigator.share({ files: [file], title: `${bpName} deployment` }); return; }
+        catch (e) { if (e.name === "AbortError") return; }
+      }
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = fname;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+      toast("Image saved");
+    } catch (e) { toast(e.message); }
+    finally { URL.revokeObjectURL(url); }
+  }
+
+  // ---- full screen: phones and tablets go properly full screen (landscape where the browser allows);
+  // bigger screens get the board in a large popup. Both use .dep-full; the board is sized to fit.
+  const top = $(".dep-top", root), wrap = $(".dep-wrap", root), zoomEl = $(".dep-zoom", root);
+  const fit = () => {
+    if (!top.classList.contains("dep-full")) { svg.style.width = svg.style.height = zoomEl.style.right = zoomEl.style.top = ""; return; }
+    const s = Math.min(wrap.clientWidth / BW, wrap.clientHeight / BH), w = Math.floor(s * BW), h = Math.floor(s * BH);
+    svg.style.width = `${w}px`; svg.style.height = `${h}px`;
+    // keep the zoom buttons on the board's corner, not the corner of the empty space round it
+    zoomEl.style.right = `${Math.floor((wrap.clientWidth - w) / 2) + 6}px`; zoomEl.style.top = `${Math.floor((wrap.clientHeight - h) / 2) + 6}px`;
+  };
+  const ro = new ResizeObserver(fit); ro.observe(wrap);
+  async function setFull(on) {
+    top.classList.toggle("dep-full", on);
+    document.body.classList.toggle("dep-lock", on);
+    (on ? top : document.body).appendChild($("#toast"));   // keep messages visible inside real full screen
+    const b = $("#dfull"); b.classList.toggle("on", on); b.setAttribute("aria-label", on ? "Exit full screen" : "Full screen"); b.title = b.getAttribute("aria-label");
+    b.innerHTML = on ? `<svg class="ico" viewBox="0 0 24 24"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/></svg>` : `<svg class="ico" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg>`;
+    depExitFull = on ? () => setFull(false) : null;
+    const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+    if (on && coarse && !fsEl) {
+      const req = top.requestFullscreen || top.webkitRequestFullscreen;
+      try { if (req) await req.call(top, { navigationUI: "hide" }); await screen.orientation?.lock?.("landscape"); } catch (e) { /* iPhone Safari: no element full screen or rotation lock; the overlay still fills the screen */ }
+    } else if (!on && fsEl) {
+      try { screen.orientation?.unlock?.(); } catch (e) { /* ignore */ }
+      try { await (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) { /* ignore */ }
+    }
+    fit();
+  }
 
   function rotate(deg) {
     const pl = D.sel && D.layout.units[D.sel];
@@ -889,6 +995,9 @@ async function viewDeploy(list, army) {
       if (!todo.length) { toast("Everything is already on the table"); return; }
       pushHist(); todo.forEach(place); D.sel = null; commit(); return;
     }
+    if (act === "placereg") return placeRegiment(regs[+t.dataset.r]);
+    if (act === "img") return saveImage();
+    if (act === "full") return setFull(!top.classList.contains("dep-full"));
     if (act === "rotl") return rotate(-15);
     if (act === "rotr") return rotate(15);
     if (act === "undo") { if (!D.hist.length) { toast("Nothing to undo"); return; } D.layout = JSON.parse(D.hist.pop()); commit(); return; }
