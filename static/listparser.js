@@ -70,7 +70,7 @@
         for (const k of keys) if (k.length >= 4 && (n2 === k || n2.startsWith(k + " ") || n2.endsWith(" " + k))) return units.get(k);
         return null;
       },
-      enhancement(raw) { return enh.get(norm(raw.replace(/\([^)]*\)|[-–]\s*\(?\d+\)?\s*points?/gi, ""))) || null; },
+      enhancement(raw) { return enh.get(norm(raw.replace(/[-–]\s*\(?\d+\)?\s*(?:points?|pts?)\b|\([^)]*\)/gi, ""))) || null; },
     };
   }
 
@@ -119,7 +119,7 @@
       if (["created with", "app:", "data:", "app version", "server version", "data version", "wounds:", "general's handbook", "pitched battles", "battle regiment"].some(p => low.startsWith(p))) continue;
       const km = l.match(/^(spell lore|prayer lore|manifestation lore|lore of manifestations)\s*[-:–]\s*(.+)$/i);
       if (km) { out[{ "spell lore": "spellLore", "prayer lore": "prayerLore" }[km[1].toLowerCase()] || "manifestationLore"] = km[2].trim().replace(/\s*\(\d+.*\)$/, ""); continue; }
-      const tm = l.match(/^battle tactic(?: cards?)?\s*[:\-]\s*(.+)$/i);
+      const tm = l.match(/^battle tactics?(?: cards?)?\s*[:\-]\s*(.+)$/i);
       if (tm) { out.tactics = tm[1].split(/,|\/|;/).map(t => t.trim()).filter(Boolean); continue; }
       const dm = l.match(/^drops?\s*[:\-]\s*(\d+)/i);
       if (dm) { out.drops = +dm[1]; continue; }
@@ -139,6 +139,7 @@
       const pmm = body.match(POINTS_RE);
       if (pmm) pts = +(pmm[1] || pmm[2] || pmm[3]);
       let clean = strip(body.replace(POINTS_RE_G, "").trim(), " -–:");
+      clean = strip(clean.replace(/[\s\-–:]*\b(?:points?|pts?)$/i, ""), " -–:");   // "Glamourweave - (20) Points"
       clean = clean.replace(/^\d+\s*x\s*/i, "");
 
       if (low.startsWith("options:") && last) { (last.options ||= []).push(l.split(":").slice(1).join(":").trim()); continue; }

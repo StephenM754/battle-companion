@@ -108,7 +108,7 @@ class Matcher:
         return None
 
     def enhancement(self, raw):
-        n = norm(re.sub(r"\([^)]*\)|[-–]\s*\(?\d+\)?\s*points?", "", raw, flags=re.I))
+        n = norm(re.sub(r"[-–]\s*\(?\d+\)?\s*(?:points?|pts?)\b|\([^)]*\)", "", raw, flags=re.I))
         hit = self.enh.get(n)
         return hit
 
@@ -188,7 +188,7 @@ def parse(text, rules_dir):
             key = {"spell lore": "spellLore", "prayer lore": "prayerLore"}.get(km.group(1).lower(), "manifestationLore")
             out[key] = re.sub(r"\s*\(\d+.*\)$", "", km.group(2).strip())
             continue
-        tm = re.match(r"^battle tactic(?: cards?)?\s*[:\-]\s*(.+)$", l, re.I)
+        tm = re.match(r"^battle tactics?(?: cards?)?\s*[:\-]\s*(.+)$", l, re.I)
         if tm:
             out["tactics"] = [t.strip() for t in re.split(r",|/|;", tm.group(1)) if t.strip()]
             continue
@@ -222,6 +222,7 @@ def parse(text, rules_dir):
         if pmm:
             pts = int(next(g for g in pmm.groups() if g))
         clean = POINTS_RE.sub("", body).strip(" -–:")
+        clean = re.sub(r"[\s\-–:]*\b(?:points?|pts?)$", "", clean, flags=re.I).strip(" -–:")   # "Glamourweave - (20) Points"
         clean = re.sub(r"^\d+\s*x\s*", "", clean, flags=re.I)
 
         if low.startswith("options:") and last_unit is not None:

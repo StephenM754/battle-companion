@@ -153,11 +153,30 @@ function parsedSummary(p) {
 function viewAdd(existing) {
   chrome({ title: existing ? "Edit list" : "Add list", back: existing ? `#/list/${existing.id}/army` : "#/lists" });
   app.innerHTML = `
-    <p class="small muted">In the Warhammer AoS app use <b>Export list → Copy</b>; in Sigdex or New Recruit copy the text export. Paste it below.</p>
+    <p class="small muted">In the Warhammer AoS app use <b>Export list → Copy</b>; in Sigdex or New Recruit copy the text export. Paste it below, or use <b>Read from screenshot</b> to turn a picture of the list into text (you can pick several screenshots of a long list).</p>
     <label for="nm">List name (optional)</label><input id="nm" type="text" value="${esc(existing?.name || "")}" placeholder="Taken from the list if blank">
-    <label for="raw">List text</label><textarea id="raw" placeholder="My list 2000/2000 pts&#10;&#10;Skaven&#10;Warpcog Convocation&#10;…">${esc(existing?.raw || "")}</textarea>
+    <div class="row spread" style="margin-top:.9rem"><label for="raw" style="margin:0">List text</label>
+      <button class="btn small" id="ocrbtn" type="button">Read from screenshot…</button><input id="ocrfile" type="file" accept="image/*" multiple hidden></div>
+    <div id="ocrstate" class="tiny muted"></div>
+    <textarea id="raw" placeholder="My list 2000/2000 pts&#10;&#10;Skaven&#10;Warpcog Convocation&#10;…">${esc(existing?.raw || "")}</textarea>
     <div class="row" style="margin-top:.6rem"><button class="btn grow" id="prev">Check list</button><button class="btn primary grow" id="save">Save</button></div>
     <div id="out"></div>`;
+  $("#ocrbtn").onclick = () => $("#ocrfile").click();
+  $("#ocrfile").onchange = async e => {
+    const files = [...e.target.files]; e.target.value = "";
+    if (!files.length) return;
+    const btn = $("#ocrbtn"), st = $("#ocrstate");
+    btn.disabled = true;
+    try {
+      const text = await ocrImages(files, msg => { st.textContent = msg; });
+      if (!text.trim()) throw new Error("No text found in that image");
+      const raw = $("#raw");
+      raw.value = raw.value.trim() ? `${raw.value.trimEnd()}\n\n${text}` : text;
+      st.innerHTML = `Read ${files.length} image${files.length === 1 ? "" : "s"}. <b>Check the text against your list</b>: screenshots read well, photos less so. Fix anything Check list flags.`;
+      $("#prev").click();
+    } catch (err) { st.innerHTML = `<span class="bad">${esc(err.message || "Couldn't read the image")}</span>`; }
+    finally { btn.disabled = false; }
+  };
   $("#prev").onclick = async () => {
     try { const p = await api("parse", { method: "POST", body: { raw: $("#raw").value } }); $("#out").innerHTML = `<div class="card">${parsedSummary(p)}</div>`; }
     catch (e) { $("#out").innerHTML = `<p class="bad">${esc(e.message)}</p>`; }
@@ -169,6 +188,79 @@ function viewAdd(existing) {
       toast("Saved"); state.list = null; go(`#/list/${r.id}/army`);
     } catch (e) { toast(e.message); }
   };
+}
+
+// ------------------------------------------------------------------ list from a screenshot (OCR in the browser)
+// Tesseract.js is only loaded when someone uses it; the first run downloads the English model (~10MB, then cached).
+const TESS_URL = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
+let tessLoad = null;
+const loadTesseract = () => tessLoad || (tessLoad = new Promise((ok, bad) => {
+  if (window.Tesseract) return ok(window.Tesseract);
+  const sc = document.createElement("script"); sc.src = TESS_URL;
+  sc.onload = () => ok(window.Tesseract); sc.onerror = () => { tessLoad = null; bad(new Error("Couldn't load the text reader (are you online?)")); };
+  document.head.appendChild(sc);
+}));
+
+// Greyscale, scaled up at least 1.5x (Tesseract misreads the app's condensed headings at phone size) and
+// dark-mode screenshots flipped to dark text on light. A contrast boost made the headings worse, so there isn't one.
+async function ocrPrep(file) {
+  const bmp = await createImageBitmap(file);
+  const k = Math.min(3, Math.max(1.5, 1300 / bmp.width));
+  const c = document.createElement("canvas"); c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+  const g = c.getContext("2d"); g.imageSmoothingQuality = "high"; g.drawImage(bmp, 0, 0, c.width, c.height);
+  const im = g.getImageData(0, 0, c.width, c.height), d = im.data;
+  let sum = 0;
+  for (let i = 0; i < d.length; i += 4) sum += d[i] * .299 + d[i + 1] * .587 + d[i + 2] * .114;
+  const dark = sum / (d.length / 4) < 128;   // dark-mode screenshot: flip to dark text on light
+  for (let i = 0; i < d.length; i += 4) {
+    let y = d[i] * .299 + d[i + 1] * .587 + d[i + 2] * .114;
+    if (dark) y = 255 - y;
+    d[i] = d[i + 1] = d[i + 2] = y;
+  }
+  g.putImageData(im, 0, 0);
+  return c;
+}
+
+async function ocrImages(files, progress) {
+  progress("Loading the text reader…");
+  const T = await loadTesseract();
+  let cur = 0;
+  const worker = await T.createWorker("eng", 1, {
+    logger: m => {
+      if (m.status === "recognizing text") progress(`Reading image ${cur + 1} of ${files.length}… ${Math.round(m.progress * 100)}%`);
+      else if (/loading|initializ/.test(m.status)) progress(`Getting the text reader ready… ${Math.round((m.progress || 0) * 100)}% (first time only)`);
+    },
+  });
+  try {
+    await worker.setParameters({ tessedit_pageseg_mode: "4" });   // one column of text in mixed sizes: what a list looks like
+    const out = [];
+    for (cur = 0; cur < files.length; cur++) {
+      const { data } = await worker.recognize(await ocrPrep(files[cur]));
+      out.push(cleanOcr(data.text));
+    }
+    return out.filter(Boolean).join("\n\n");
+  } finally { await worker.terminate(); }
+}
+
+// Tidy what OCR gives back so the list parser can read it.
+function cleanOcr(t) {
+  let lines = t.replace(/[‘’`´]/g, "'").replace(/[“”]/g, '"').replace(/[—–]/g, "-").split(/\r?\n/).map(l => l.replace(/\s+/g, " ").trim());
+  lines = lines.map(l => l
+    .replace(/^(?:[e«»*°¢©®•·o]|\.|-)\s+(?=[A-Z(])/, "• ")              // bullets read as e, «, * …
+    .replace(/\(\s*([0-9OoIlSB]{2,4})\s*(points?|pts?)\s*[)}\]]?/gi, (m, n, w) => `(${n.replace(/[Oo]/g, "0").replace(/[Il]/g, "1").replace(/S/g, "5").replace(/B/g, "8")} ${w})`)
+    .replace(/(\d)[,.](\d{3})(?!\d)/g, "$1$2"))                                     // 2,000/2,000pts -> 2000/2000pts
+    .filter(l => l && !/^[-_=~.\s|]+$/.test(l) && !/^(created with|app:|data:)/i.test(l));
+  // join lines the screenshot wrapped: a line ending in a comma, or a short lowercase-led continuation
+  const out = [];
+  for (const l of lines) {
+    const prev = out[out.length - 1];
+    if (prev && (/,$/.test(prev) || /^battle tactics? cards?:/i.test(prev) && !/:\s*$/.test(prev) && /^[A-Z][a-z]+$/.test(l))) out[out.length - 1] = `${prev} ${l}`;
+    else out.push(l);
+  }
+  // a list name that wrapped onto a second all-caps line ("MY LIST 2000/2000pts" + "NAME") goes back on the first line
+  if (out.length > 1 && /\d+\s*\/\s*\d+\s*pts/i.test(out[0]) && /^[A-Z0-9' &!-]{3,}$/.test(out[1]) && !/^(GENERAL|REGIMENT|FACTION|AUXILIARY|MANIFESTATION)/.test(out[1]))
+    out.splice(0, 2, out[0].replace(/\s*(\d+\s*\/\s*\d+\s*pts)/i, ` ${out[1]} $1`));
+  return out.join("\n");
 }
 
 // ------------------------------------------------------------------ army assembly
