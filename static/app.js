@@ -662,6 +662,8 @@ async function viewPlay(list, army) {
 // Board is drawn in inches: viewBox 0 0 60 44. Map data is 8 px per inch, so it sits in a scale(1/8) group.
 // Layout = { side: "attacker"|"defender", units: { uid: { n: unit name, m: [[x, y, angle], …] } } }, one entry per model.
 const BW = 60, BH = 44, MM_IN = 25.4;
+const TERR_DEF = [6, 4];   // inches: marker for faction terrain whose size isn't in the rules data
+const radOf = b => b.rect ? Math.hypot(b.w, b.h) / 2 : Math.max(b.w, b.h) / 2;
 const DEP_COLORS = ["#e0675f", "#6aa8e8", "#5fbf7f", "#e0b450", "#b07ae0", "#4fc1c1", "#e07ab8", "#a3c25a", "#e09a4f", "#8c94e8", "#c9a27e", "#7ec99f"];
 const r2 = v => Math.round(v * 100) / 100;
 const coarse = matchMedia("(pointer: coarse)").matches;   // phone or tablet: real full screen instead of a popup
@@ -717,6 +719,14 @@ async function deployUnits(list, army) {
     const words = nm.replace(/[^A-Za-z\s-]/g, "").split(/[\s-]+/).filter(x => x && !/^(of|the|and|with|on|a)$/i.test(x));
     return (words.length === 1 ? words[0].slice(0, 2) : words.slice(-3).map(x => x[0]).join("")).toUpperCase();
   };
+  // faction terrain from the list: base from the battle profile when there is one, else a default marker
+  for (const [ti, t] of (list.parsed.terrain || []).entries()) {
+    const w = army.fac.warscrolls.find(x => x.name.toLowerCase() === String(t.name).toLowerCase());
+    const b = w?.bases?.[0];
+    units.push({ uid: `t${ti}`, regiment: "Faction terrain", name: w?.name || t.name, terrain: true, w, n: 1,
+      models: [b ? { w: b[0] / MM_IN, h: b[1] / MM_IN } : { w: TERR_DEF[0], h: TERR_DEF[1], rect: true }],
+      label: b ? mmTxt(b) : `${TERR_DEF[0]}″ × ${TERR_DEF[1]}″ marker`, defaultSize: !b });
+  }
   units.forEach(u => { u.code = code(u.name); });
   // different units with the same initials get the next letter of their last word (Blood Sisters BSi, Blood Stalkers BSt)
   const clash = units.filter(u => units.some(x => x.code === u.code && x.name !== u.name));
@@ -724,7 +734,7 @@ async function deployUnits(list, army) {
   const counts = {};
   units.forEach(u => { counts[u.code] = (counts[u.code] || 0) + 1; });
   const seen = {};
-  units.forEach((u, i) => { if (counts[u.code] > 1) u.code += (seen[u.code] = (seen[u.code] || 0) + 1); u.color = DEP_COLORS[i % DEP_COLORS.length]; });
+  units.forEach((u, i) => { if (counts[u.code] > 1) u.code += (seen[u.code] = (seen[u.code] || 0) + 1); u.color = u.terrain ? "#9b8862" : DEP_COLORS[i % DEP_COLORS.length]; });
   return units;
 }
 
@@ -740,12 +750,20 @@ function zonesOf(bp) {
 
 function rimPts(x, y, a, b) {
   const out = [], rx = b.w / 2, ry = b.h / 2, t = a * Math.PI / 180, c = Math.cos(t), s = Math.sin(t);
-  for (let k = 0; k < 24; k++) { const q = k * Math.PI / 12, px = rx * Math.cos(q), py = ry * Math.sin(q); out.push([x + px * c - py * s, y + px * s + py * c]); }
+  const add = (px, py) => out.push([x + px * c - py * s, y + px * s + py * c]);
+  if (b.rect) { for (let k = 0; k <= 8; k++) { const f = k / 8; add(-rx + 2 * rx * f, -ry); add(-rx + 2 * rx * f, ry); add(-rx, -ry + 2 * ry * f); add(rx, -ry + 2 * ry * f); } }
+  else for (let k = 0; k < 24; k++) { const q = k * Math.PI / 12; add(rx * Math.cos(q), ry * Math.sin(q)); }
   return out;
 }
 const inRect = (p, r) => p[0] >= r.x - 1e-6 && p[0] <= r.x + r.w + 1e-6 && p[1] >= r.y - 1e-6 && p[1] <= r.y + r.h + 1e-6;
 const rectDist = (p, r) => Math.hypot(Math.max(r.x - p[0], 0, p[0] - r.x - r.w), Math.max(r.y - p[1], 0, p[1] - r.y - r.h));
 // wholly within friendly territory and more than 9" from enemy territory
+// faction terrain: wholly within friendly territory and more than 3" from objectives and the battleplan's terrain
+const OBJ_R = 20 / MM_IN;
+function terrainOkAt(x, y, a, b, mine, bp) {
+  const circ = (bp?.map || []).filter(g => g[0] === "c").map(g => ({ x: g[1] / 8, y: g[2] / 8, r: /objective/.test(g[4]) ? OBJ_R : g[3] / 8 }));
+  return rimPts(x, y, a, b).every(p => mine.some(r => inRect(p, r)) && circ.every(o => Math.hypot(p[0] - o.x, p[1] - o.y) > o.r + 3));
+}
 const legalAt = (x, y, a, b, mine, enemy) => rimPts(x, y, a, b).every(p => mine.some(r => inRect(p, r)) && enemy.every(r => rectDist(p, r) > 9));
 function radiusToward(b, a, dir) { const phi = dir - a * Math.PI / 180, A = b.w / 2, B = b.h / 2; return A * B / Math.hypot(B * Math.cos(phi), A * Math.sin(phi)); }
 function edgeGap(p, bp, q, bq) {
@@ -812,7 +830,7 @@ async function viewDeploy(list, army) {
     + [...Array(7).keys()].map(i => `<line x1="0" y1="${(i + 1) * 6}" x2="${BW}" y2="${(i + 1) * 6}"/>`).join("");
   const regs = [...new Set(units.map(u => u.regiment))];
   const tplOptions = () => `<option value="">Scratch layout (not saved)</option>` + templates.map(t => `<option value="${t.id}" ${t.id === D.tplId ? "selected" : ""}>${esc(t.name)}</option>`).join("");
-  const problems = units.filter(u => u.missing || u.sizeMissing || u.guessed);
+  const problems = units.filter(u => u.missing || u.sizeMissing || u.guessed || u.defaultSize);
 
   app.innerHTML = `<div id="dep">
     <div class="dep-top">
@@ -857,7 +875,7 @@ async function viewDeploy(list, army) {
       <div class="row wrap" style="margin-top:.4rem"><button class="btn small primary" data-act="save">Save</button><button class="btn small" data-act="saveas">Save as new…</button>
         <button class="btn small danger" data-act="deltpl">Delete</button><button class="btn small danger" data-act="clear" style="margin-left:auto">Clear table</button></div>
     </div>
-    ${problems.length ? `<div class="warn-box">${problems.map(u => u.missing ? `<b>${esc(u.name)}</b>: no warscroll found, so it can't be placed.`
+    ${problems.length ? `<div class="warn-box">${problems.map(u => u.defaultSize ? `<b>${esc(u.name)}</b>: size not in the rules data${u.w ? ` ("${esc((u.w.baseSizes || []).join(", ") || "none")}")` : ""}, so it's a ${esc(u.label)}.` : u.missing ? `<b>${esc(u.name)}</b>: no warscroll found, so it can't be placed.`
       : `<b>${esc(u.name)}</b>: ${[u.sizeMissing && "unit size not in the rules data (using 1 model)", u.guessed && `base size not in the rules data ("${esc((u.w.baseSizes || []).join(", ") || "none")}"), using ${esc(u.label)}`].filter(Boolean).join("; ")}.`).join("<br>")}</div>` : ""}
     <div class="row spread" style="margin-top:.8rem"><h2 style="margin:0">Units</h2><button class="btn small" data-act="placeall">Place all</button></div>
     <div id="dtray"></div>
@@ -897,57 +915,61 @@ async function viewDeploy(list, army) {
       if (!pl) continue;
       const st = stat[u.uid] = { bad: 0, coh: coherent(pl.m, u.models) };
       pl.m.forEach((p, i) => {
-        const b = u.models[i], ok = legalAt(p[0], p[1], p[2], b, mine, enemy);
-        placed++;
+        const b = u.models[i], ok = u.terrain ? terrainOkAt(p[0], p[1], p[2], b, mine, bp) : legalAt(p[0], p[1], p[2], b, mine, enemy);
+        if (!u.terrain) placed++;
         if (!ok) { st.bad++; badModels++; }
         const cls = `tok${ok ? "" : " bad"}${D.sel === u.uid ? " sel" : ""}${D.sel === u.uid && D.mode === "model" && D.selModel === i ? " selm" : ""}`;
-        const t = `<g class="${cls}" data-u="${u.uid}" data-i="${i}" transform="translate(${r2(p[0])} ${r2(p[1])}) rotate(${p[2]})"><ellipse rx="${r2(b.w / 2)}" ry="${r2(b.h / 2)}" style="fill:${u.color}"/>`
-          + `<text class="tok-t" transform="rotate(${-p[2]})" style="font-size:${r2(Math.min(b.w, b.h) * (u.code.length > 2 ? .36 : .45))}px">${esc(u.code)}</text></g>`;
+        const t = `<g class="${cls}${u.terrain ? " terr" : ""}" data-u="${u.uid}" data-i="${i}" transform="translate(${r2(p[0])} ${r2(p[1])}) rotate(${p[2]})">`
+          + (b.rect ? `<rect x="${r2(-b.w / 2)}" y="${r2(-b.h / 2)}" width="${r2(b.w)}" height="${r2(b.h)}" rx=".5" style="fill:${u.color}"/>` : `<ellipse rx="${r2(b.w / 2)}" ry="${r2(b.h / 2)}" style="fill:${u.color}"/>`)
+          + `<text class="tok-t" transform="rotate(${-p[2]})" style="font-size:${r2(Math.min(1.4, Math.min(b.w, b.h) * (u.code.length > 2 ? .36 : .45)))}px">${esc(u.code)}</text></g>`;
         if (D.sel === u.uid) selToks += t; else toks += t;
-        if (D.sel === u.uid && +D.ring) rings += `<ellipse cx="${r2(p[0])}" cy="${r2(p[1])}" rx="${r2(b.w / 2 + +D.ring)}" ry="${r2(b.h / 2 + +D.ring)}" transform="rotate(${p[2]} ${r2(p[0])} ${r2(p[1])})"/>`;
+        if (D.sel === u.uid && +D.ring && b.rect) rings += `<rect x="${r2(-b.w / 2 - D.ring)}" y="${r2(-b.h / 2 - D.ring)}" width="${r2(b.w + 2 * D.ring)}" height="${r2(b.h + 2 * D.ring)}" rx="${D.ring}" transform="translate(${r2(p[0])} ${r2(p[1])}) rotate(${p[2]})"/>`;
+        else if (D.sel === u.uid && +D.ring) rings += `<ellipse cx="${r2(p[0])}" cy="${r2(p[1])}" rx="${r2(b.w / 2 + +D.ring)}" ry="${r2(b.h / 2 + +D.ring)}" transform="rotate(${p[2]} ${r2(p[0])} ${r2(p[1])})"/>`;
       });
     }
     $("#dtoks").innerHTML = toks + selToks;
     $("#drings").innerHTML = rings;
-    const total = units.reduce((s, u) => s + u.n, 0);
+    const total = units.reduce((s, u) => s + (u.terrain ? 0 : u.n), 0);
     const su = D.sel && byId[D.sel], ss = su && stat[su.uid];
     $("#dstatus").innerHTML = `<span class="muted">${placed}/${total} models on the table</span> · ${badModels ? `<span class="bad">${badModels} outside your deployable area</span>` : `<span class="good">all legal</span>`}`
-      + (su ? ` · <b>${esc(su.code)}</b> ${esc(su.name)}${ss ? (ss.coh ? ` <span class="good">coherent</span>` : ` <span class="bad">not coherent</span>`) : ""}` : "");
+      + (su ? ` · <b>${esc(su.code)}</b> ${esc(su.name)}${ss && !su.terrain ? (ss.coh ? ` <span class="good">coherent</span>` : ` <span class="bad">not coherent</span>`) : ""}` : "");
     const tpl = templates.find(t => t.id === D.tplId);
     $("#dtplstate").textContent = tpl ? (JSON.stringify(tpl.data) === JSON.stringify(D.layout) ? "Saved." : "Unsaved changes.") : (placed ? "Not saved yet: use Save to keep it as a named deployment." : "");
     if (light) return;
     segs();
     $("#dtray").innerHTML = regs.map((rg, ri) => `<div class="card tight"><div class="row spread" style="margin-bottom:.2rem"><h4 style="margin:0">${esc(rg)}</h4>
-      ${units.some(u => u.regiment === rg && !u.missing && !D.layout.units[u.uid]) ? `<button class="btn small" data-act="placereg" data-r="${ri}" title="Puts the regiment in no man's land, clear of the rest of your army, ready to drag in">Place regiment</button>` : ""}</div>${units.filter(u => u.regiment === rg).map(u => {
+      ${units.some(u => u.regiment === rg && !u.missing && !D.layout.units[u.uid]) ? `<button class="btn small" data-act="placereg" data-r="${ri}" title="Puts the regiment in no man's land, clear of the rest of your army, ready to drag in">Place ${u0(rg)}</button>`
+        : units.some(u => u.regiment === rg && D.layout.units[u.uid]) ? `<button class="btn small" data-act="remreg" data-r="${ri}">Remove ${u0(rg)}</button>` : ""}</div>${units.filter(u => u.regiment === rg).map(u => {
       const st = stat[u.uid];
       return `<div class="dep-unit ${D.sel === u.uid ? "on" : ""}" data-u="${u.uid}">
         <i class="sw" style="background:${u.color}"></i>
         <div class="grow"><div><b>${esc(u.code)}</b> ${esc(u.name)}${u.general ? ` <span class="chip accent">General</span>` : ""}</div>
-          <div class="tiny muted">${u.missing ? "no warscroll" : `${u.n} model${u.n === 1 ? "" : "s"}${u.reinforced ? ` (reinforced, 2×${u.w.unitSize})` : ""} · ${esc(u.label)}${u.guessed ? ` <span class="warn">(guessed)</span>` : ""}`}
-          ${st ? ` · ${st.bad ? `<span class="bad">${st.bad} out of zone</span>` : `<span class="good">legal</span>`}${st.coh ? "" : ` · <span class="bad">not coherent</span>`}` : ""}</div></div>
+          <div class="tiny muted">${u.missing ? "no warscroll" : u.terrain ? `Faction terrain · ${esc(u.label)}${u.defaultSize ? ` <span class="warn">(default size)</span>` : ""}` : `${u.n} model${u.n === 1 ? "" : "s"}${u.reinforced ? ` (reinforced, 2×${u.w.unitSize})` : ""} · ${esc(u.label)}${u.guessed ? ` <span class="warn">(guessed)</span>` : ""}`}
+          ${st ? ` · ${st.bad ? `<span class="bad">${u.terrain ? "not legal (needs: in your territory, 3″ from objectives and terrain)" : `${st.bad} out of zone`}</span>` : `<span class="good">legal</span>`}${st.coh ? "" : ` · <span class="bad">not coherent</span>`}` : ""}</div></div>
         ${u.missing ? "" : st ? `<button class="btn small" data-act="remove" data-u="${u.uid}">Remove</button>` : `<button class="btn small primary" data-act="place" data-u="${u.uid}">Place</button>`}
       </div>`;
     }).join("")}</div>`).join("");
   }
   const commit = () => { saveDraft(); draw(); };
+  const u0 = rg => rg === "Faction terrain" ? "terrain" : "regiment";
 
   // A free spot for the unit as a coherent block, 1" clear of other units. Normally a legal spot in your
   // territory; with neutral, a spot in no man's land (½" clear of both territories) so it stands out to drag in.
   function autoSpot(u, o = {}) {
     const [mine, enemy] = sides(), off = clusterOffsets(u.models), side = D.layout.side, zonesAll = [...mine, ...enemy];
     const others = [];
-    for (const [uid, pl] of Object.entries(D.layout.units)) if (uid !== u.uid) pl.m.forEach((p, i) => { const b = byId[uid].models[i]; others.push([p[0], p[1], Math.max(b.w, b.h) / 2]); });
+    for (const [uid, pl] of Object.entries(D.layout.units)) if (uid !== u.uid) pl.m.forEach((p, i) => { const b = byId[uid].models[i]; others.push([p[0], p[1], radOf(b)]); });
     const big = mine.slice().sort((a, b) => b.w * b.h - a.w * a.h)[0] || { x: 0, y: 0, w: BW, h: BH };
     const v = D.view, vh = v.w * BH / BW;
     const pref = o.pref || (o.neutral ? [BW / 2, BH / 2] : v.w < BW - 1 ? [v.x + v.w / 2, v.y + vh / 2] : [big.x + big.w / 2, big.y + big.h / 2]);
     const okAt = o.neutral
       ? (x, y, b) => rimPts(x, y, 0, b).every(p => p[0] > .25 && p[0] < BW - .25 && p[1] > .25 && p[1] < BH - .25 && zonesAll.every(r => rectDist(p, r) > .5))
-      : (x, y, b) => legalAt(x, y, 0, b, mine, enemy);
+      : u.terrain ? (x, y, b) => terrainOkAt(x, y, 0, b, mine, bp) : (x, y, b) => legalAt(x, y, 0, b, mine, enemy);
     const cands = [];
     for (let x = 0.5; x < BW; x += 0.5) for (let y = 0.5; y < BH; y += 0.5) cands.push([x, y, (x - pref[0]) ** 2 + (y - pref[1]) ** 2]);
     cands.sort((a, b) => a[2] - b[2]);
     const fits = (cx, cy) => u.models.every((b, i) => {
-      const x = cx + off[i][0], y = cy + off[i][1], R = Math.max(b.w, b.h) / 2;
+      const x = cx + off[i][0], y = cy + off[i][1], R = radOf(b);
       return okAt(x, y, b) && others.every(q => Math.hypot(q[0] - x, q[1] - y) > q[2] + R + 1);
     });
     const hit = cands.find(c => fits(c[0], c[1]));
@@ -956,7 +978,8 @@ async function viewDeploy(list, army) {
     const [cx, cy] = hit || pref;
     return off.map(q => [r2(Math.min(BW, Math.max(0, cx + q[0]))), r2(Math.min(BH, Math.max(0, cy + q[1]))), 0]);
   }
-  const place = u => { D.layout.units[u.uid] = { n: u.name, m: autoSpot(u) }; D.sel = u.uid; D.selModel = null; };
+  // neutral: into no man's land to drag in yourself (Place, Place regiment); otherwise a legal spot (Place all)
+  const place = (u, neutral) => { D.layout.units[u.uid] = { n: u.name, m: autoSpot(u, { neutral }) }; D.sel = u.uid; D.selModel = null; };
   function placeRegiment(rg) {
     const todo = units.filter(x => x.regiment === rg && !x.missing && !D.layout.units[x.uid]);
     if (!todo.length) { toast("That regiment is already on the table"); return; }
@@ -1059,7 +1082,11 @@ async function viewDeploy(list, army) {
 
   async function saveAs() {
     const n = Object.keys(D.layout.units).length;
-    const name = prompt(`Name this ${bpName} deployment`, `${D.layout.side === "attacker" ? "Attacker" : "Defender"} ${templates.length + 1}`);
+    // default name: battleplan initials, small words lower case (Caverns of Slaughter -> CoS), numbered when taken
+    const abbr = bpName.split(/\s+/).map(w => /^(of|the|from|under|is|in|and|to|a)$/i.test(w) ? w[0].toLowerCase() : w[0].toUpperCase()).join("");
+    let def = abbr, k = 1;
+    while (templates.some(t => t.name === def)) def = `${abbr} ${++k}`;
+    const name = prompt(`Name this ${bpName} deployment`, def);
     if (!name?.trim()) return;
     try {
       const t = await api(`lists/${list.id}/layouts`, { method: "POST", body: { battleplan: bpName, name: name.trim(), data: D.layout } });
@@ -1080,14 +1107,19 @@ async function viewDeploy(list, army) {
     if (t.dataset.mode) { D.mode = t.dataset.mode; store.set("bc-deploy-mode", D.mode); draw(); return; }
     if (t.dataset.ring) { D.ring = +t.dataset.ring; store.set("bc-deploy-ring", D.ring); draw(); return; }
     const act = t.dataset.act, u = t.dataset.u && byId[t.dataset.u];
-    if (act === "place" && u) { pushHist(); place(u); commit(); return; }
+    if (act === "place" && u) { pushHist(); place(u, true); D.view = { x: 0, y: 0, w: BW }; setView(); commit(); toast(`${u.name} is in no man's land: drag it into your territory`); return; }
     if (act === "remove" && u) { pushHist(); delete D.layout.units[u.uid]; if (D.sel === u.uid) D.sel = null; commit(); return; }
     if (act === "placeall") {
       const todo = units.filter(x => !x.missing && !D.layout.units[x.uid]);
       if (!todo.length) { toast("Everything is already on the table"); return; }
-      pushHist(); todo.forEach(place); D.sel = null; commit(); return;
+      pushHist(); todo.forEach(x => place(x, false)); D.sel = null; commit(); return;
     }
     if (act === "placereg") return placeRegiment(regs[+t.dataset.r]);
+    if (act === "remreg") {
+      const rg = regs[+t.dataset.r], ids = units.filter(x => x.regiment === rg && D.layout.units[x.uid]).map(x => x.uid);
+      pushHist(); ids.forEach(id => delete D.layout.units[id]); if (ids.includes(D.sel)) { D.sel = null; D.selModel = null; }
+      commit(); toast(`Took ${rg} off the table`); return;
+    }
     if (act === "img") return saveImage();
     if (act === "full") return setFull(!top.classList.contains("dep-full"));
     if (act === "rotl") return rotate(-15);
@@ -1169,7 +1201,7 @@ async function viewDeploy(list, army) {
       if (!drag.moved && Math.hypot(dx, dy) < 0.15) return;
       if (!drag.moved) { drag.moved = true; D.hist.push(drag.snap); if (D.hist.length > 80) D.hist.shift(); }
       for (const k of drag.idx) {   // keep every moved model on the table
-        const o = drag.orig[k], R = Math.max(u.models[k].w, u.models[k].h) / 2;
+        const o = drag.orig[k], R = radOf(u.models[k]);
         dx = Math.min(BW - R - o[0], Math.max(R - o[0], dx)); dy = Math.min(BH - R - o[1], Math.max(R - o[1], dy));
       }
       for (const k of drag.idx) pl.m[k] = [r2(drag.orig[k][0] + dx), r2(drag.orig[k][1] + dy), drag.orig[k][2]];

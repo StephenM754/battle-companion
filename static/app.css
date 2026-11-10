@@ -210,10 +210,11 @@ body.dep-lock { overflow: hidden; }
   .dep-full #dstatus { grid-area: status; max-width: 10rem; }
 }
 .tok { cursor: grab; }
-.tok ellipse { stroke: rgba(0, 0, 0, .6); stroke-width: .06; }
-.tok.sel ellipse { stroke: var(--text); stroke-width: .14; }
-.tok.selm ellipse { stroke: var(--accent); stroke-width: .22; }
-.tok.bad ellipse { stroke: var(--bad); stroke-width: .2; stroke-dasharray: .3 .15; }
+.tok ellipse, .tok rect { stroke: rgba(0, 0, 0, .6); stroke-width: .06; }
+.tok.terr ellipse, .tok.terr rect { fill-opacity: .8; }
+.tok.sel rect, .tok.sel ellipse { stroke: var(--text); stroke-width: .14; }
+.tok.selm rect, .tok.selm ellipse { stroke: var(--accent); stroke-width: .22; }
+.tok.bad rect, .tok.bad ellipse { stroke: var(--bad); stroke-width: .2; stroke-dasharray: .3 .15; }
 .tok-t { fill: #111; font-weight: 800; text-anchor: middle; dominant-baseline: central; pointer-events: none; font-family: var(--font); }
 .dep-rings { fill: var(--accent); opacity: .28; pointer-events: none; }
 .dep-unit { display: flex; gap: .55rem; align-items: center; padding: .45rem .3rem; border-bottom: 1px solid var(--line); cursor: pointer; }
